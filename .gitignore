@@ -4,6 +4,11 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Eclipse metadata files that can be ignored  
+.editorconfig   
+.gitattributes   
+bin/     
+
 ### STS ###
 .apt_generated
 .classpath
