@@ -15,10 +15,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Subscriptions")
-@SequenceGenerator(name = "Susbcription_subscription_id_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "Susbcriptions_subscription_id_seq", initialValue = 1, allocationSize = 1)
 public class Subscription {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Susbcription_subscription_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Susbcriptions_subscription_id_seq")
 	@Column(name = "subscription_id", columnDefinition = "NUMERIC(4)", nullable = false)
 	private Integer id;
 

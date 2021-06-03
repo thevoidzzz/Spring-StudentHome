@@ -19,15 +19,17 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "Apartments", indexes = {
 		@Index(columnList = "apartment_name", name = "apartments_index_apartment_name") }, 
          uniqueConstraints = {@UniqueConstraint(columnNames = { "apartment_description" })})
-@SequenceGenerator(name = "Apartments_apartment_id_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "sequenceApartment", sequenceName = "Apartments_apartment_id_seq", initialValue = 2, allocationSize = 1)
 
 public class Apartment {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Apartments_apartment_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceApartment")
 	@Column(name = "apartment_id", columnDefinition = "NUMERIC(4)", nullable = false)
 	private Integer id;
 
@@ -42,23 +44,12 @@ public class Apartment {
 
 	@Column(name = "apartment_initial_date_publication")
 	@Temporal(TemporalType.DATE)
-	private Date initialDatePublication;
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	private Date initialDatePublication;	
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "region_id", columnDefinition = "NUMERIC(4)",nullable = false)
-	private Region region;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "province_id", columnDefinition = "NUMERIC(4)",nullable = false)
-	private Province province;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "district_id", nullable = false)
-	private District district;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lessor_id", nullable = false)
-	private Lessor lessor;
+	@JoinColumn(name = "district_id")
+	private District district;	
 
 	@OneToMany(mappedBy = "apartment", fetch = FetchType.LAZY)
 	private List<Reservation> reservations;
@@ -107,23 +98,7 @@ public class Apartment {
 
 	public void setInitialDatePublication(Date initialDatePublication) {
 		this.initialDatePublication = initialDatePublication;
-	}
-
-	public Region getRegion() {
-		return region;
-	}
-
-	public void setRegion(Region region) {
-		this.region = region;
-	}
-
-	public Province getProvince() {
-		return province;
-	}
-
-	public void setProvince(Province province) {
-		this.province = province;
-	}
+	}	
 
 	public District getDistrict() {
 		return district;
@@ -131,15 +106,7 @@ public class Apartment {
 
 	public void setDistrict(District district) {
 		this.district = district;
-	}
-
-	public Lessor getLessor() {
-		return lessor;
-	}
-
-	public void setLessor(Lessor lessor) {
-		this.lessor = lessor;
-	}
+	}	
 
 	public List<Reservation> getReservations() {
 		return reservations;

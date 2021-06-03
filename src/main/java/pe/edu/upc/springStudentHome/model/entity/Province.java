@@ -1,6 +1,5 @@
 package pe.edu.upc.springStudentHome.model.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,31 +18,25 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Provinces")
 @SequenceGenerator(name = "Provinces_province_id_seq", initialValue = 1, allocationSize = 1)
-public class Province implements Serializable{
-		
-	private static final long serialVersionUID = 1L;
+public class Province {	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Provinces_province_id_seq")
-	@Column(name = "province_id", columnDefinition = "NUMERIC(4)", nullable = false)
+	@Column(name = "province_id", columnDefinition = "NUMERIC(4)")
 	private Integer id;
 
 	@Column(name = "province_name", length = 50, nullable = false)
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "region_id", nullable = false)
+	@JoinColumn(name = "region_id")
 	private Region region;
 	
 	@OneToMany(mappedBy = "province", fetch = FetchType.LAZY)
-	private List<District> districts;
-	
-	@OneToMany(mappedBy = "province", fetch = FetchType.LAZY)
-	private List<Apartment> apartments;
+	private List<District> districts;	
 
 	public Province() {
-		districts = new ArrayList<District>();
-		apartments = new ArrayList<Apartment>();
+		districts = new ArrayList<District>();		
 	}	
 
 	public Integer getId() {

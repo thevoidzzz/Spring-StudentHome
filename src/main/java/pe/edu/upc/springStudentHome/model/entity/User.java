@@ -6,73 +6,72 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "Users")
+@Table(name = "Users", indexes = {
+		@Index(columnList = "user_first_name, user_last_name", name = "users_index_last_first_name") }, uniqueConstraints = {
+				@UniqueConstraint(columnNames = { "user_email" }) })
+@SequenceGenerator(name = "sequenceUser", sequenceName = "Users_user_id_seq", initialValue = 1, allocationSize = 1)
 public class User {
-	// EmbeddedId primary key
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceUser")
+	@Column(name = "user_id", columnDefinition = "NUMERIC(4)", nullable = false)
 	private Integer id;
-	
+
 	@Column(name = "user_first_name", length = 20)
 	private String firstName;
-	
+
 	@Column(name = "user_last_name", length = 20)
 	private String lastName;
 
 	@Column(name = "user_dni", length = 8)
 	private String dni;
-	
+
 	@Column(name = "user_phone", length = 12)
 	private String phone;
-	
+
 	@Column(name = "user_email", length = 30)
 	private String email;
-	
+
 	@Column(name = "user_password", length = 20)
 	private String password;
-	
+
 	@Column(name = "user_address", length = 30)
 	private String address;
-	
+
 	private Boolean enabled;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "district_id", nullable = false)
 	private District district;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "role_id", nullable = false)
+	private Role role;
+
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Reservation> reservations;		
-	
+	private List<Reservation> reservations;
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "users_subscriptions",
-			joinColumns = { @JoinColumn(referencedColumnName = "id", name = "user_id")},
-			inverseJoinColumns = { @JoinColumn(referencedColumnName = "subscription_id", name = "subscription_id")})
-	private List<Subscription> subscriptions;		
-	
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "id")
-	private Lessor lessor;
-	
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "id")
-	private Student student;
-	
-	// --Constructor, Getter y Setter  
+	@JoinTable(name = "users_subscriptions", joinColumns = {
+			@JoinColumn(referencedColumnName = "user_id", name = "user_id") }, inverseJoinColumns = {
+					@JoinColumn(referencedColumnName = "subscription_id", name = "subscription_id") })
+	private List<Subscription> subscriptions;
+
+	// --Constructor, Getter y Setter
 	public User() {
 		reservations = new ArrayList<Reservation>();
 		subscriptions = new ArrayList<Subscription>();
@@ -88,6 +87,14 @@ public class User {
 
 	public String getFirstName() {
 		return firstName;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public void setFirstName(String firstName) {
@@ -166,22 +173,6 @@ public class User {
 		this.subscriptions = subscriptions;
 	}
 
-	public Lessor getLessor() {
-		return lessor;
-	}
-
-	public void setLessor(Lessor lessor) {
-		this.lessor = lessor;
-	}
-
-	public Student getStudent() {
-		return student;
-	}
-
-	public void setStudent(Student student) {
-		this.student = student;
-	}
-
 	public Boolean getEnabled() {
 		return enabled;
 	}
@@ -189,6 +180,5 @@ public class User {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
-	
+
 }

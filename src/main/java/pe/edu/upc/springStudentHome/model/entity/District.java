@@ -15,19 +15,19 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Districts")
+@Table(name = "districts")
 @SequenceGenerator(name = "Districts_district_id_seq", initialValue = 1, allocationSize = 1)
 public class District {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Districts_district_id_seq")
-	@Column(name = "district_id", columnDefinition = "NUMERIC(4)", nullable = false)
+	@Column(name = "district_id", columnDefinition = "NUMERIC(4)")
 	private Integer id;
 
 	@Column(name = "district_name", length = 20)
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "province_id", nullable = false)
+	@JoinColumn(name = "province_id")
 	private Province province;
 
 	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY)

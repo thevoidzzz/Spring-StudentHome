@@ -29,23 +29,11 @@ public class Region implements Serializable{
 	private String name;
 
 	@OneToMany(mappedBy = "region", fetch = FetchType.LAZY)
-	private List<Province> provinces;	
-	
-	@OneToMany(mappedBy = "region", fetch = FetchType.LAZY)
-	private List<Apartment> apartments;
+	private List<Province> provinces;		
 
 	public Region() {		
-		provinces = new ArrayList<Province>();
-		apartments = new ArrayList<Apartment>();
-	}	
-
-	public List<Apartment> getApartments() {
-		return apartments;
-	}
-
-	public void setApartments(List<Apartment> apartments) {
-		this.apartments = apartments;
-	}
+		provinces = new ArrayList<Province>();		
+	}		
 
 	public Integer getId() {
 		return id;

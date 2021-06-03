@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "PaymentProofs")
 @SequenceGenerator( name = "Paymentproofs_paymentproof_id_seq", initialValue = 1, allocationSize = 1 )
@@ -28,6 +30,7 @@ public class PaymentProof {
 
 	@Column(name = "payment_proof_initial_date")
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date paymentProofInitialDate;
 
 	@Column(name = "payment_price", columnDefinition = "DECIMAL(8,2)")

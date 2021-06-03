@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "Reservations")
 @SequenceGenerator(name = "Reservations_reservation_id_seq", initialValue = 1, allocationSize = 1)
@@ -35,10 +37,12 @@ public class Reservation {
 
 	@Column(name = "reservation_initial_date")
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date initialDate;
 
 	@Column(name = "reservation_final_date")
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date finalDate;
 
 	@OneToOne(mappedBy = "reservation")

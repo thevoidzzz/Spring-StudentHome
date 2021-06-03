@@ -10,22 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
 	@GetMapping
-	public String response() {
-		return "pagina";
+	public String home() {
+		return "home";
 	}
 	
 	@PostMapping
-	public String response2() {
-		return "pagina2";
+	public String dashboard() {
+		return "dashboard";
 	}
 	
-	@GetMapping("login") // /home/login
-	public String home() {
-		return "pagina2";
+	@GetMapping("dashboard") // /test/interno
+	public String index() {
+		return "dashboard";
 	}
 	
-	@GetMapping("login/register") // /login/register
-	public String home1() {
-		return "pagina";
-	}
 }
