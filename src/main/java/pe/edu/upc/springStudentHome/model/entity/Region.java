@@ -1,11 +1,11 @@
 package pe.edu.upc.springStudentHome.model.entity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,25 +15,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Regions")
-@SequenceGenerator(name = "Regions_region_id_seq", initialValue = 1, allocationSize = 1)
-public class Region implements Serializable{	
-	
-	private static final long serialVersionUID = 1L;
-
+@SequenceGenerator(name = "sequenceRegion", sequenceName = "Regions_region_id_seq", initialValue = 1, allocationSize = 1)
+public class Region {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Regions_region_id_seq")
-	@Column(name = "region_id", columnDefinition = "NUMERIC(4)", nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceRegion")
+	@Column(name = "region_id", columnDefinition = "DECIMAL(3)", nullable = false)
 	private Integer id;
 
-	@Column(name = "region_name", length = 35)
-	private String name;
+	@Column(name = "region_name", length = 25, nullable = false)
+	private String regionName;
 
-	@OneToMany(mappedBy = "region", fetch = FetchType.LAZY)
-	private List<Province> provinces;		
+	@OneToMany(mappedBy = "region")
+	private List<Country> countries;
 
-	public Region() {		
-		provinces = new ArrayList<Province>();		
-	}		
+	// -- Constructor, Getter y Setter
+	public Region() {
+		countries = new ArrayList<Country>();
+	}
 
 	public Integer getId() {
 		return id;
@@ -43,22 +41,20 @@ public class Region implements Serializable{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getRegionName() {
+		return regionName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
 	}
 
-	public List<Province> getProvinces() {
-		return provinces;
+	public List<Country> getCountries() {
+		return countries;
 	}
 
-	public void setProvinces(List<Province> provinces) {
-		this.provinces = provinces;
+	public void setCountries(List<Country> countries) {
+		this.countries = countries;
 	}
-
-	
 
 }

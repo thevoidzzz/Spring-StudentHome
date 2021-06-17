@@ -5,11 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -25,17 +26,26 @@ public class Subscription {
 	@Column(name = "subscription_name", length = 50, nullable = false)
 	private String subscriptionName;
 
-	@Column(name = "subscription_description", length = 150, nullable = false)
-	private String subscriptionDescription;
+	@Column(name = "subscription_advantage_1", length = 150)
+	private String subscriptionAdvantage1;
 
-	@ManyToMany(mappedBy = "subscriptions", fetch = FetchType.LAZY)
-	private List<User> users;
+	@Column(name = "subscription_advantage_2", length = 150)
+	private String subscriptionAdvantage2;
+
+	@Column(name = "subscription_advantage_3", length = 150)
+	private String subscriptionAdvantage3;
+
+	@Column(name = "subscription_price", columnDefinition = "DECIMAL(8,2)", nullable = false)
+	private Float subscriptionPrice;
+
+	@OneToMany(mappedBy = "user")
+	private List<UserSubscription> userSubscriptions;
 
 	// --Constructor, Getter y Setter
 
 	public Subscription() {
-		users = new ArrayList<User>();
-	}	
+		userSubscriptions = new ArrayList<UserSubscription>();
+	}
 
 	public Integer getId() {
 		return id;
@@ -45,20 +55,44 @@ public class Subscription {
 		this.id = id;
 	}
 
+	public String getSubscriptionAdvantage1() {
+		return subscriptionAdvantage1;
+	}
+
+	public void setSubscriptionAdvantage1(String subscriptionAdvantage1) {
+		this.subscriptionAdvantage1 = subscriptionAdvantage1;
+	}
+
+	public String getSubscriptionAdvantage2() {
+		return subscriptionAdvantage2;
+	}
+
+	public void setSubscriptionAdvantage2(String subscriptionAdvantage2) {
+		this.subscriptionAdvantage2 = subscriptionAdvantage2;
+	}
+
+	public String getSubscriptionAdvantage3() {
+		return subscriptionAdvantage3;
+	}
+
+	public void setSubscriptionAdvantage3(String subscriptionAdvantage3) {
+		this.subscriptionAdvantage3 = subscriptionAdvantage3;
+	}
+
+	public Float getSubscriptionPrice() {
+		return subscriptionPrice;
+	}
+
+	public void setSubscriptionPrice(Float subscriptionPrice) {
+		this.subscriptionPrice = subscriptionPrice;
+	}
+
 	public String getSubscriptionName() {
 		return subscriptionName;
 	}
 
 	public void setSubscriptionName(String subscriptionName) {
 		this.subscriptionName = subscriptionName;
-	}
-
-	public String getSubscriptionDescription() {
-		return subscriptionDescription;
-	}
-
-	public void setSubscriptionDescription(String subscriptionDescription) {
-		this.subscriptionDescription = subscriptionDescription;
 	}
 
 }

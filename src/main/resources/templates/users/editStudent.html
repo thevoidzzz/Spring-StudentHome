@@ -1,37 +1,367 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/fontawesome.min.css}" rel="stylesheet">
-    <link th:href="@{/css/solid.min.css}" rel="stylesheet">
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
 
-    <title>Region Example</title>
-  </head>
-<body>
+<body class="app sidebar-mini rtl">
 
-	<h2>CRUD Example </h2>
-	
-	<div class="card" style="width: 40rem;">
-	  <div class="card-header">
-	    New Region
-	  </div>
-	  <div class="card-body">
-	  	
-	  	<form th:action="@{/regions/savenew}" th:object="${regionNew}" method="post">
-		  <div class="mb-3">
-		    <label for="name" class="form-label">Name</label>
-		    <input type="text" class="form-control" th:field="*{name}" placeholder="Name of region" >
-		  </div>
-
-		  <button type="submit" class="btn btn-primary">Save</button>
-		</form>
-		<br>
-  		<a th:href="@{/regions}" class="btn btn-primary"> <i class="fas fa-angle-double-left"></i> Return</a>
-	  </div>
+	<!--Global-Loader-->
+	<div id="global-loader">
+		<img th:src="@{/assets/images/icons/loader.svg}" alt="loader">
 	</div>
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<div class="page">
+		<div class="page-main">
+
+			<!--app-header-->
+			<div th:replace="layout/layout :: header"></div>
+			<!--app-header end-->
+
+			<!-- Sidebar menu-->
+			<div th:replace="layout/layout :: dashboard"></div>
+			<!--sidemenu end-->
+
+			<!-- app-content-->
+			<div class="app-content  my-3 my-md-5 toggle-content">
+				<div class="side-app">
+					<div class="bg-white p-3 header-secondary row">
+						<div class="col">
+							<div class="d-flex">
+								<a class="btn btn-danger" href="#"><i
+									class="fe fe-rotate-cw mr-1 mt-1"></i> Upgrade </a>
+							</div>
+
+						</div>
+					</div>
+					<!-- page-header -->
+					<div class="page-header">
+						<ol class="breadcrumb">
+							<!-- breadcrumb -->
+							<li class="breadcrumb-item"><a href="#">Profile</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Edit
+								Profile</li>
+						</ol>
+						<!-- End breadcrumb -->
+
+					</div>
+					<!-- End page-header -->
+
+					<!-- row -->
+					<div class="row">
+						<div class="col-lg-12 col-xl-4 col-md-12 col-sm-12">
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">My profile</h3>
+								</div>
+								<div class="card-body">
+									<div class="text-center">
+										<div class="userprofile ">
+											<div class="userpic  brround">
+												<img src="../assets/images/users/female/5.jpg" alt=""
+													class="userpicimg">
+											</div>
+											<h3 class="username mb-2">Anthony Tangana</h3>
+											<p class="mb-1">Student, Lima</p>
+											<div class="text-center mb-4">
+												<span><i class="fa fa-star text-warning"></i></span> <span><i
+													class="fa fa-star text-warning"></i></span> <span><i
+													class="fa fa-star text-warning"></i></span> <span><i
+													class="fa fa-star-half-o text-warning"></i></span> <span><i
+													class="fa fa-star-o text-warning"></i></span>
+											</div>
+											<div class="socials text-center mt-3">
+												<a href="" class="btn btn-circle btn-primary "> <i
+													class="fa fa-facebook"></i></a> <a href=""
+													class="btn btn-circle btn-danger "> <i
+													class="fa fa-google-plus"></i></a> <a href=""
+													class="btn btn-circle btn-info "> <i
+													class="fa fa-twitter"></i></a> <a href=""
+													class="btn btn-circle btn-warning "><i
+													class="fa fa-envelope"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card-footer">
+									<ul class="row text-center clearfix mb-0">
+										<li class="col-sm-4"><span
+											class="text-dark font-weight-bold">1,345</span>
+											<p class="text-muted mb-0">
+												<small>Following</small>
+											</p></li>
+										<li class="col-sm-4"><span
+											class="text-dark font-weight-bold">23,456</span>
+											<p class="text-muted mb-0">
+												<small>Followers</small>
+											</p></li>
+										<li class="col-sm-4"><span
+											class="text-dark font-weight-bold">52,678</span>
+											<p class="text-muted mb-0">
+												<small>Likes</small>
+											</p></li>
+									</ul>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">Followers</h3>
+								</div>
+								<div class="card-body pt-3 pb-3">
+									<div class="memberblock mb-0">
+										<div class="row">
+											<div th:each="user :${users}"
+												class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pl-1 pr-1 m-t-5 m-b-5">
+												<a href="" class="member"> <img
+													th:src="@{/assets/images/icons/2.svg}" alt="">
+													<div class="memmbername" th:text="${user.userName}"></div>
+												</a>
+											</div>
+										</div>
+										<!-- 										<div class="row "> -->
+										<!-- 											<div -->
+										<!-- 												class="col-lg-4 col-md-4 col-sm-4 pl-1 pr-1 mb-0 m-t-5 m-b-5"> -->
+										<!-- 												<a href="" class="member"> <img -->
+										<!-- 													src="../assets/images/users/female/26.jpg" alt=""> -->
+										<!-- 													<div class="memmbername">John Sriram</div> -->
+										<!-- 												</a> -->
+										<!-- 											</div> -->
+										<!-- 											<div -->
+										<!-- 												class="col-lg-4 col-md-4 col-sm-4 pl-1 pr-1 mb-0 m-t-5 m-b-5"> -->
+										<!-- 												<a href="" class="member"> <img -->
+										<!-- 													src="../assets/images/users/male/13.jpg" alt=""> -->
+										<!-- 													<div class="memmbername">Chandra Amin</div> -->
+										<!-- 												</a> -->
+										<!-- 											</div> -->
+										<!-- 											<div -->
+										<!-- 												class="col-lg-4 col-md-4 col-sm-4 pl-1 pr-1 mb-0 m-t-5 m-b-5"> -->
+										<!-- 												<a href="" class="member"> <img -->
+										<!-- 													src="../assets/images/users/female/18.jpg" alt=""> -->
+										<!-- 													<div class="memmbername">Julian Knox</div> -->
+										<!-- 												</a> -->
+										<!-- 											</div> -->
+										<!-- 										</div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12 col-xl-8 col-md-12 col-sm-12">
+							<form th:action="@{/users/save}" th:object="${userEdit}"
+								method="post">
+								<div class="card">
+									<div class="card-header">
+										<h3 class="card-title">Edit Profile</h3>
+									</div>
+									<div class="card-body">
+										<div class="form-group">
+											<label for="userName">Full Name</label> <input type="text"
+												class="form-control" th:field="*{userName}"
+												placeholder="Anthony Tangana">
+										</div>
+										<div class="form-group">
+											<label for="userEmail">Email</label> <input type="email"
+												class="form-control" th:field="*{userEmail}"
+												placeholder="anthony@gmail.com">
+										</div>
+										<div class="form-group">
+											<label for="userPhone">Phone Number</label> <input
+												type="number" class="form-control" th:field="*{userPhone}"
+												placeholder="984567123">
+										</div>
+										<div class="form-group">
+											<label class="form-label" for="userBiography">Biography</label>
+											<textarea class="form-control" rows="6"
+												th:field="*{userBiography}">My bio.........</textarea>
+										</div>
+										<div class="wd-200 mg-b-30">
+											<label for="initialDatePublication" class="form-label">Date
+												Of Birth </label>
+											<div class="input-group">
+
+												<div class="input-group-prepend">
+													<div class="input-group-text">
+														<i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+													</div>
+												</div>
+												<input class="form-control fc-datepicker"
+													placeholder="MM/DD/YYYY" type="text"
+													th:field="*{userBirthday}">
+											</div>
+										</div>
+										<div class="form-group mb-0 mt-5">
+											<div class="row">
+												<div class="col-xl-6 col-lg-12 col-md-12 userprofile">
+													<div class="userpic mb-2">
+														<img src="../assets/images/users/female/5.jpg" alt=""
+															class="userpicimg">
+													</div>
+													<p class="text-center">Student, UPC</p>
+													<div class="text-center">
+														<a href="#" class="btn btn-primary mt-1"><i
+															class="fe fe-camera  mr-1"></i>Change Photo</a><br> <a
+															href="#" class="btn btn-info mt-1 mb-3 mb-xl-0"><i
+															class="fe fe-camera-off mr-1 mb-2"></i>Remove Photo</a>
+													</div>
+												</div>
+												<div class="col-xl-6 col-lg-12 col-md-12">
+													<div class="form-group">
+														<label for="userPassword">Change Password</label> <input
+															type="password" th:field="*{userPassword}"
+															class="form-control" placeholder="********">
+													</div>
+													<div class="form-group">
+														<label>New Password</label> <input type="password"
+															class="form-control" placeholder="********">
+													</div>
+													<div class="form-group mb-0">
+														<label>Confirm Password</label> <input type="password"
+															class="form-control" placeholder="********">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card-footer text-right">
+										<button class="btn btn-success" type="submit"
+											th:href="@{'/users'}">Save</button>
+										<a th:href="@{/users}" class="btn  btn-danger"> Cancel </a>
+										<button type="button" class="btn  btn-danger"
+											data-toggle="modal" data-target="#exampleModal">Delete
+											Account</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+					</div>
+					<!-- row end -->
+
+				</div>
+
+				<div class="modal fade" id="exampleModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Are you
+									sure?</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>You are about to delete your account!</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+								<a th:href="@{'/users/' + ${user.id} + '/del'}"><button
+										type="button" class="btn btn-danger">
+										Delete
+									</button> </a>								
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!-- Right-sidebar-->
+				<div th:replace="layout/layout :: sidebar"></div>
+				<!-- End Rightsidebar-->
+
+
+				<!--footer-->
+				<footer th:replace="layout/layout :: footer"></footer>
+				<!-- End Footer-->
+			</div>
+		</div>
+	</div>
+
+	<!-- End Page -->
+
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<!-- Jquery js-->
+	<script th:src="@{/assets/js/vendors/jquery-3.2.1.min.js}"></script>
+
+	<!--Bootstrap.min js-->
+	<script th:src="@{/assets/plugins/bootstrap/popper.min.js}"></script>
+	<script th:src="@{/assets/plugins/bootstrap/js/bootstrap.min.js}"></script>
+
+	<!--Jquery Sparkline js-->
+	<script th:src="@{/assets/js/vendors/jquery.sparkline.min.js}"></script>
+
+	<!-- Chart Circle js-->
+	<script th:src="@{/assets/js/vendors/circle-progress.min.js}"></script>
+
+	<!-- Star Rating js-->
+	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
+
+	<!--Moment js-->
+	<script th:src="@{/assets/plugins/moment/moment.min.js}"></script>
+
+	<!-- Daterangepicker js-->
+	<script
+		th:src="@{/assets/plugins/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+	<!--Side-menu js-->
+	<script th:src="@{/assets/plugins/toggle-sidebar/sidemenu.js}"></script>
+
+	<!-- Sidebar Accordions js -->
+	<script th:src="@{/assets/plugins/accordion1/js/easyResponsiveTabs.js}"></script>
+
+	<!-- Custom scroll bar js-->
+	<script
+		th:src="@{/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+	<!--Owl Carousel js -->
+	<script th:src="@{/assets/plugins/owl-carousel/owl.carousel.js}"></script>
+	<script th:src="@{/assets/plugins/owl-carousel/owl-main.js}"></script>
+
+	<!-- Rightsidebar js -->
+	<script th:src="@{/assets/plugins/sidebar/sidebar.js}"></script>
+
+	<!-- Charts js-->
+	<script th:src="@{/assets/plugins/chart/chart.bundle.js}"></script>
+	<script th:src="@{/assets/plugins/chart/utils.js}"></script>
+
+	<!-- File uploads js -->
+	<script th:src="@{/assets/plugins/fileuploads/js/dropify.js}"></script>
+	<script th:src="@{/assets/plugins/fileuploads/js/dropify-demo.js}"></script>
+
+	<!--Select2 js -->
+	<script th:src="@{/assets/plugins/select2/select2.full.min.js}"></script>
+	<script th:src="@{/assets/js/select2.js}"></script>
+
+	<!--Time Counter js-->
+	<script
+		th:src="@{/assets/plugins/counters/jquery.missofis-countdown.js}"></script>
+	<script th:src="@{/assets/plugins/counters/counter.js}"></script>
+
+	<!--Morris  Charts js-->
+	<script th:src="@{/assets/plugins/morris/raphael-min.js}"></script>
+	<script th:src="@{/assets/plugins/morris/morris.js}"></script>
+
+	<!-- Custom-charts js-->
+	<script th:src="@{/assets/js/index1.js}"></script>
+
+	<!-- Timepicker js -->
+	<script th:src="@{/assets/plugins/time-picker/jquery.timepicker.js}"></script>
+	<script th:src="@{/assets/plugins/time-picker/toggles.min.js}"></script>
+
+	<!-- Datepicker js -->
+	<script th:src="@{/assets/plugins/date-picker/spectrum.js}"></script>
+	<script th:src="@{/assets/plugins/date-picker/jquery-ui.js}"></script>
+	<script th:src="@{/assets/plugins/input-mask/jquery.maskedinput.js}"></script>
+
+	<!-- Custom js-->
+	<script th:src="@{/assets/js/custom.js}"></script>
 </body>
 </html>

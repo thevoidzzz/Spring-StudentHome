@@ -3,21 +3,21 @@
   $(function () {
     $.growl({
       title: "Welcome",
-      message: "Hi I'm HOGO"
+      message: "Hi! we are StudentHome"
     });
 
 	 $('.error').click(function (event) {
       event.preventDefault();
       event.stopPropagation();
       return $.growl.error({
-        message: "please check Your details ...file is missing"
+        message: "Removed from favorites"
       });
     });
     $('.notice').click(function (event) {
       event.preventDefault();
       event.stopPropagation();
       return $.growl.notice({
-        message: "You have 4 notification"
+        message: "Added to favorites"
       });
     });
     return $('.warning').click(function (event) {

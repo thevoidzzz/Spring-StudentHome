@@ -1,37 +1,259 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/fontawesome.min.css}" rel="stylesheet">
-    <link th:href="@{/css/solid.min.css}" rel="stylesheet">
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
 
-    <title>Region Example</title>
-  </head>
-<body>
+<body class="app sidebar-mini rtl">
 
-	<h2>CRUD Example </h2>
-	
-	<div class="card" style="width: 40rem;">
-	  <div class="card-header">
-	    New Region
-	  </div>
-	  <div class="card-body">
-	  	
-	  	<form th:action="@{/regions/savenew}" th:object="${regionNew}" method="post">
-		  <div class="mb-3">
-		    <label for="name" class="form-label">Name</label>
-		    <input type="text" class="form-control" th:field="*{name}" placeholder="Name of region" >
-		  </div>
-
-		  <button type="submit" class="btn btn-primary">Save</button>
-		</form>
-		<br>
-  		<a th:href="@{/regions}" class="btn btn-primary"> <i class="fas fa-angle-double-left"></i> Return</a>
-	  </div>
+	<!--Global-Loader-->
+	<div id="global-loader">
+		<img th:src="@{/assets/images/icons/loader.svg}" alt="loader">
 	</div>
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<div class="page">
+		<div class="page-main">
+
+			<!--app-header-->
+			<div th:replace="layout/layout :: header"></div>
+			<!--app-header end-->
+
+			<!-- Sidebar menu-->
+			<div th:replace="layout/layout :: dashboard"></div>
+			<!--sidemenu end-->
+
+			<!-- app-content-->
+			<div class="app-content  my-3 my-md-5 toggle-content">
+				<div class="side-app">
+					<div class="bg-white p-3 header-secondary row">
+						<div class="col">
+							<div class="d-flex">
+								<a class="btn btn-danger" href="#"><i
+									class="fe fe-rotate-cw mr-1 mt-1"></i> Upgrade </a>
+							</div>
+
+						</div>
+						
+					</div>
+					<!-- page-header -->
+					<div class="page-header">
+						<ol class="breadcrumb">
+							<!-- breadcrumb -->
+							<li class="breadcrumb-item"><a th:href="@{home/dashboard}">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Add
+								new apartment</li>
+						</ol>
+						<!-- End breadcrumb -->
+
+					</div>
+					<!-- End page-header -->
+
+					<!-- row -->
+					<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex">
+											<a class="header-brand" href="index.html">
+												<img alt="logo" class="header-brand-img" src="../assets/images/brand/logo.png">
+											</a>
+											<div class="text-right ml-auto">
+												<h2 class="mb-1">Invoice #XXXX</h2>
+												<p class="mb-1"><span class="font-weight-semibold">Invoice Date:</span> <span></span> </p>
+												<p><span class="font-weight-semibold">Due Date :</span> 01 March  2020</p>
+											</div>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-lg-6 ">
+												<p class="h3">Invoice Form:</p>
+												<address>
+													Street Address<br>
+													State, City<br>
+													Region, Postal Code<br>
+													yourdomain@example.com
+												</address>
+											</div>
+											<div class="col-lg-6 text-right">
+												<p class="h3">Invoice To:</p>
+												<address>
+													Street Address<br>
+													State, City<br>
+													Region, Postal Code<br>
+													ypurdomain@example.com
+												</address>
+											</div>
+										</div>
+										<div class="table-responsive push">
+											<table class="table table-bordered table-hover mb-0">
+												<tbody><tr class=" ">
+													<th class="text-center " style="width: 1%"></th>
+													<th>Item</th>
+													<th class="text-center" style="width: 1%">Quantity</th>
+													<th class="text-right">Unit Price</th>
+													<th class="text-right">Sub Total</th>
+												</tr>
+												<tr>
+													<td class="text-center">1</td>
+													<td>
+														<p class="font-w600 mb-1">Logo Design</p>
+														<div class="text-muted"><div class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</div></div>
+													</td>
+													<td class="text-center">2</td>
+													<td class="text-right">$674</td>
+													<td class="text-right">$1,308</td>
+												</tr>
+												<tr>
+													<td class="text-center">2</td>
+													<td>
+														<p class="font-w600 mb-1">Website wireframe for 2 pages</p>
+														<div class="text-muted">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</div>
+													</td>
+													<td class="text-center">4</td>
+													<td class="text-right">$1,500</td>
+													<td class="text-right">$6,000</td>
+												</tr>
+												<tr>
+													<td class="text-center">3</td>
+													<td>
+														<p class="font-w600 mb-1">PSD to HTML coding</p>
+														<div class="text-muted">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</div>
+													</td>
+													<td class="text-center">3</td>
+													<td class="text-right">$530</td>
+													<td class="text-right">$1,690</td>
+												</tr>
+												<tr>
+													<td class="text-center">4</td>
+													<td>
+														<p class="font-w600 mb-1">E-commerce Development</p>
+														<div class="text-muted">When our power of choice is untrammelled and when nothing prevents our being able</div>
+													</td>
+													<td class="text-center">2</td>
+													<td class="text-right">$800</td>
+													<td class="text-right">$1,600</td>
+												</tr>
+												<tr>
+													<td class="text-center">5</td>
+													<td>
+														<p class="font-w600 mb-1">Design and layout of 2 pages in Photoshop</p>
+														<div class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</div>
+													</td>
+													<td class="text-center">2</td>
+													<td class="text-right">$720</td>
+													<td class="text-right">$1,440</td>
+												</tr>
+												<tr>
+													<td colspan="4" class="font-weight-bold text-uppercase text-right">Total</td>
+													<td class="font-weight-bold text-right h4">$12,038</td>
+												</tr>
+											</tbody></table>
+										</div>
+									</div>
+									<div class="card-footer text-right">
+										<button type="button" class="btn btn-primary mb-1" onclick="javascript:window.print();"><i class="si si-wallet"></i> Pay Invoice</button>
+										<button type="button" class="btn btn-success mb-1" onclick="javascript:window.print();"><i class="si si-paper-plane"></i> Send Invoice</button>
+										<button type="button" class="btn btn-info mb-1" onclick="javascript:window.print();"><i class="si si-printer"></i> Print Invoice</button>
+									</div>
+								</div>
+							</div>
+						</div>	<!-- end row -->
+				</div>
+				<!--End side app-->
+
+				<!-- Right-sidebar-->
+				<div th:replace="layout/layout :: sidebar"></div>
+				<!-- End Rightsidebar-->
+
+				<!--footer-->
+				<footer th:replace="layout/layout :: footer"></footer>
+				<!-- End Footer-->
+
+			</div>
+			<!-- End app-content-->
+		</div>
+	</div>
+	<!-- End Page -->
+
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<!-- Jquery js-->
+	<script th:src="@{/assets/js/vendors/jquery-3.2.1.min.js}"></script>
+
+	<!--Bootstrap.min js-->
+	<script th:src="@{/assets/plugins/bootstrap/popper.min.js}"></script>
+	<script th:src="@{/assets/plugins/bootstrap/js/bootstrap.min.js}"></script>
+
+	<!--Jquery Sparkline js-->
+	<script th:src="@{/assets/js/vendors/jquery.sparkline.min.js}"></script>
+
+	<!-- Chart Circle js-->
+	<script th:src="@{/assets/js/vendors/circle-progress.min.js}"></script>
+
+	<!-- Star Rating js-->
+	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
+
+	<!--Moment js-->
+	<script th:src="@{/assets/plugins/moment/moment.min.js}"></script>
+
+	<!-- Daterangepicker js-->
+	<script
+		th:src="@{/assets/plugins/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+	<!--Side-menu js-->
+	<script th:src="@{/assets/plugins/toggle-sidebar/sidemenu.js}"></script>
+
+	<!-- Sidebar Accordions js -->
+	<script th:src="@{/assets/plugins/accordion1/js/easyResponsiveTabs.js}"></script>
+
+	<!-- Custom scroll bar js-->
+	<script
+		th:src="@{/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+	<!--Owl Carousel js -->
+	<script th:src="@{/assets/plugins/owl-carousel/owl.carousel.js}"></script>
+	<script th:src="@{/assets/plugins/owl-carousel/owl-main.js}"></script>
+
+	<!-- Rightsidebar js -->
+	<script th:src="@{/assets/plugins/sidebar/sidebar.js}"></script>
+
+	<!-- Charts js-->
+	<script th:src="@{/assets/plugins/chart/chart.bundle.js}"></script>
+	<script th:src="@{/assets/plugins/chart/utils.js}"></script>
+
+	<!-- File uploads js -->
+	<script th:src="@{/assets/plugins/fileuploads/js/dropify.js}"></script>
+	<script th:src="@{/assets/plugins/fileuploads/js/dropify-demo.js}"></script>
+
+	<!--Select2 js -->
+	<script th:src="@{/assets/plugins/select2/select2.full.min.js}"></script>
+	<script th:src="@{/assets/js/select2.js}"></script>
+
+	<!--Time Counter js-->
+	<script
+		th:src="@{/assets/plugins/counters/jquery.missofis-countdown.js}"></script>
+	<script th:src="@{/assets/plugins/counters/counter.js}"></script>
+
+	<!--Morris  Charts js-->
+	<script th:src="@{/assets/plugins/morris/raphael-min.js}"></script>
+	<script th:src="@{/assets/plugins/morris/morris.js}"></script>
+
+	<!-- Custom-charts js-->
+	<script th:src="@{/assets/js/index1.js}"></script>
+
+	<!-- Timepicker js -->
+	<script th:src="@{/assets/plugins/time-picker/jquery.timepicker.js}"></script>
+	<script th:src="@{/assets/plugins/time-picker/toggles.min.js}"></script>
+
+	<!-- Datepicker js -->
+	<script th:src="@{/assets/plugins/date-picker/spectrum.js}"></script>
+	<script th:src="@{/assets/plugins/date-picker/jquery-ui.js}"></script>
+	<script th:src="@{/assets/plugins/input-mask/jquery.maskedinput.js}"></script>
+
+	<!-- Custom js-->
+	<script th:src="@{/assets/js/custom.js}"></script>
 </body>
 </html>

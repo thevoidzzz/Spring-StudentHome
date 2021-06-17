@@ -631,6 +631,12 @@ pre code {
 	flex-grow: 1;
 	max-width: 100%;
 }
+.contact-space {
+	place-content: space-between;
+	display: flex;
+	align-items: baseline;
+}
+
 .col-auto {
 	-ms-flex: 0 0 auto;
 	flex: 0 0 auto;

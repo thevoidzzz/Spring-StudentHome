@@ -1,37 +1,207 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/fontawesome.min.css}" rel="stylesheet">
-    <link th:href="@{/css/solid.min.css}" rel="stylesheet">
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
 
-    <title>Region Example</title>
-  </head>
-<body>
+<body class="app sidebar-mini rtl">
 
-	<h2>CRUD Example </h2>
-	
-	<div class="card" style="width: 40rem;">
-	  <div class="card-header">
-	    New Region
-	  </div>
-	  <div class="card-body">
-	  	
-	  	<form th:action="@{/regions/savenew}" th:object="${regionNew}" method="post">
-		  <div class="mb-3">
-		    <label for="name" class="form-label">Name</label>
-		    <input type="text" class="form-control" th:field="*{name}" placeholder="Name of region" >
-		  </div>
-
-		  <button type="submit" class="btn btn-primary">Save</button>
-		</form>
-		<br>
-  		<a th:href="@{/regions}" class="btn btn-primary"> <i class="fas fa-angle-double-left"></i> Return</a>
-	  </div>
+	<!--Global-Loader-->
+	<div id="global-loader">
+		<img th:src="@{/assets/images/icons/loader.svg}" alt="loader">
 	</div>
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<div class="page">
+		<div class="page-main">
+
+			<!--app-header-->
+			<div th:replace="layout/layout :: header"></div>
+			<!--app-header end-->
+
+			<!-- Sidebar menu-->
+			<div th:replace="layout/layout :: dashboard"></div>
+			<!--sidemenu end-->
+
+			<!-- app-content-->
+			<div class="app-content  my-3 my-md-5 toggle-content">
+				<div class="side-app">
+					<div class="bg-white p-3 header-secondary row">
+						<div class="col">
+							<div class="d-flex">
+								<a class="btn btn-danger" href="#"><i
+									class="fe fe-rotate-cw mr-1 mt-1"></i> Upgrade </a>
+							</div>
+
+						</div>
+						
+					</div>
+					<!-- page-header -->
+					<div class="page-header">
+						<ol class="breadcrumb">
+							<!-- breadcrumb -->
+							<li class="breadcrumb-item"><a th:href="@{home/dashboard}">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Add
+								new subscription</li>
+						</ol>
+						<!-- End breadcrumb -->
+
+					</div>
+					<!-- End page-header -->
+
+					<!-- row -->
+					<form th:action="@{/subscriptions/savenew}"
+						th:object="${subscriptionNew}" method="post">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h3 class="mb-0 card-title">New Subscription</h3>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="subscriptionName" class="form-label">Name
+													</label> <input type="text" class="form-control"
+														name="example-text-input" th:field="*{subscriptionName}"
+														placeholder="Lessor Premium">
+												</div>
+												<div class="form-group">
+													<label for="subscriptionPrice" class="form-label">Price
+													</label> <input type="text" class="form-control"
+														name="example-text-input" th:field="*{subscriptionPrice}"
+														placeholder="100.00">
+												</div>																					
+												<div class="form-group">
+													<label for="subscriptionAdvantage1" class="form-label">Advantage 1
+													</label> <input type="text" class="form-control"
+														name="example-text-input" th:field="*{subscriptionAdvantage1}"
+														placeholder="Advantage1">
+												</div>
+												<div class="form-group">
+													<label for="subscriptionAdvantage2" class="form-label">Advantage 2
+													</label> <input type="text" class="form-control"
+														name="example-text-input" th:field="*{subscriptionAdvantage2}"
+														placeholder="Advantage2">
+												</div>
+												<div class="form-group">
+													<label for="subscriptionAdvantage3" class="form-label">Advantage 3
+													</label> <input type="text" class="form-control"
+														name="example-text-input" th:field="*{subscriptionAdvantage3}"
+														placeholder="Advantage3">
+												</div>
+																						
+												<div class="card-footer text-right">
+													<a th:href="@{/subscriptions}" class="btn  btn-danger">
+														Cancel </a>
+													<button class="btn btn-success" type="submit" th:href="@{'/subscriptions'}">
+														Add</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+					</form>
+				</div>
+				<!--End side app-->
+
+				<!-- Right-sidebar-->
+				<div th:replace="layout/layout :: sidebar"></div>
+				<!-- End Rightsidebar-->
+
+				<!--footer-->
+				<footer th:replace="layout/layout :: footer"></footer>
+				<!-- End Footer-->
+
+			</div>
+			<!-- End app-content-->
+		</div>
+	</div>
+	<!-- End Page -->
+
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<!-- Jquery js-->
+	<script th:src="@{/assets/js/vendors/jquery-3.2.1.min.js}"></script>
+
+	<!--Bootstrap.min js-->
+	<script th:src="@{/assets/plugins/bootstrap/popper.min.js}"></script>
+	<script th:src="@{/assets/plugins/bootstrap/js/bootstrap.min.js}"></script>
+
+	<!--Jquery Sparkline js-->
+	<script th:src="@{/assets/js/vendors/jquery.sparkline.min.js}"></script>
+
+	<!-- Chart Circle js-->
+	<script th:src="@{/assets/js/vendors/circle-progress.min.js}"></script>
+
+	<!-- Star Rating js-->
+	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
+
+	<!--Moment js-->
+	<script th:src="@{/assets/plugins/moment/moment.min.js}"></script>
+
+	<!-- Daterangepicker js-->
+	<script
+		th:src="@{/assets/plugins/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+	<!--Side-menu js-->
+	<script th:src="@{/assets/plugins/toggle-sidebar/sidemenu.js}"></script>
+
+	<!-- Sidebar Accordions js -->
+	<script th:src="@{/assets/plugins/accordion1/js/easyResponsiveTabs.js}"></script>
+
+	<!-- Custom scroll bar js-->
+	<script
+		th:src="@{/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+	<!--Owl Carousel js -->
+	<script th:src="@{/assets/plugins/owl-carousel/owl.carousel.js}"></script>
+	<script th:src="@{/assets/plugins/owl-carousel/owl-main.js}"></script>
+
+	<!-- Rightsidebar js -->
+	<script th:src="@{/assets/plugins/sidebar/sidebar.js}"></script>
+
+	<!-- Charts js-->
+	<script th:src="@{/assets/plugins/chart/chart.bundle.js}"></script>
+	<script th:src="@{/assets/plugins/chart/utils.js}"></script>
+
+	<!-- File uploads js -->
+	<script th:src="@{/assets/plugins/fileuploads/js/dropify.js}"></script>
+	<script th:src="@{/assets/plugins/fileuploads/js/dropify-demo.js}"></script>
+
+	<!--Select2 js -->
+	<script th:src="@{/assets/plugins/select2/select2.full.min.js}"></script>
+	<script th:src="@{/assets/js/select2.js}"></script>
+
+	<!--Time Counter js-->
+	<script
+		th:src="@{/assets/plugins/counters/jquery.missofis-countdown.js}"></script>
+	<script th:src="@{/assets/plugins/counters/counter.js}"></script>
+
+	<!--Morris  Charts js-->
+	<script th:src="@{/assets/plugins/morris/raphael-min.js}"></script>
+	<script th:src="@{/assets/plugins/morris/morris.js}"></script>
+
+	<!-- Custom-charts js-->
+	<script th:src="@{/assets/js/index1.js}"></script>
+
+	<!-- Timepicker js -->
+	<script th:src="@{/assets/plugins/time-picker/jquery.timepicker.js}"></script>
+	<script th:src="@{/assets/plugins/time-picker/toggles.min.js}"></script>
+
+	<!-- Datepicker js -->
+	<script th:src="@{/assets/plugins/date-picker/spectrum.js}"></script>
+	<script th:src="@{/assets/plugins/date-picker/jquery-ui.js}"></script>
+	<script th:src="@{/assets/plugins/input-mask/jquery.maskedinput.js}"></script>
+
+	<!-- Custom js-->
+	<script th:src="@{/assets/js/custom.js}"></script>
 </body>
 </html>

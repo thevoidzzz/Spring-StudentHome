@@ -292,7 +292,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var settings;
     settings = {
-      title: "Notice!",
+      title: "Successfully!",
       style: "notice"
     };
     return $.growl($.extend(settings, options));
@@ -303,7 +303,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var settings;
     settings = {
-      title: "Warning!",
+      title: "Removed!",
       style: "warning"
     };
     return $.growl($.extend(settings, options));

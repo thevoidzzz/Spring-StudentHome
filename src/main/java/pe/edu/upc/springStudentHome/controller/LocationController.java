@@ -9,28 +9,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import pe.edu.upc.springStudentHome.model.entity.District;
-import pe.edu.upc.springStudentHome.service.crud.DistrictService;
+import pe.edu.upc.springStudentHome.model.entity.Location;
+import pe.edu.upc.springStudentHome.service.crud.LocationService;
 
 @Controller
-@RequestMapping("/districts")
-@SessionAttributes("districtEdit")  // Se utiliza para guardar el objeto en memoria, cuando se envia y retorna.
-public class DistrictController {
+@RequestMapping("/locations")
+@SessionAttributes("locationEdit")  // Se utiliza para guardar el objeto en memoria, cuando se envia y retorna.
+public class LocationController {
 
 	@Autowired
-	private DistrictService districtService;
+	private LocationService locationService;
 	
 	@GetMapping		// GET: /apartments
 	public String listar( Model model ) {
 		try {
-			List<District> districts = districtService.getAll();
-			model.addAttribute("districts", districts);
+			List<Location> locations = locationService.getAll();
+			model.addAttribute("locations", locations);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
 		
-		return "districts/lista";
+		return "locations/lista";
 	}
 	
 	

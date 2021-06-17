@@ -3,9 +3,9 @@ package pe.edu.upc.springStudentHome.model.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import pe.edu.upc.springStudentHome.model.entity.District;
+import pe.edu.upc.springStudentHome.model.entity.Country;
 
 @Repository
-public interface DistrictRepository extends JpaRepository<District, Integer>{
+public interface CountryRepository extends JpaRepository<Country, String> {
 
 }

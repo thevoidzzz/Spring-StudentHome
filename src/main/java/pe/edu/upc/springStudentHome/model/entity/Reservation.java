@@ -1,7 +1,6 @@
 package pe.edu.upc.springStudentHome.model.entity;
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,50 +27,51 @@ public class Reservation {
 	@Column(name = "reservation_id", columnDefinition = "NUMERIC(4)", nullable = false)
 	private Integer id;
 
-	@Column(name = "reservation_description", length = 100)
-	private String description;
+	@Column(name = "reservation_description", length = 100, nullable = false)
+	private String reservationDescription;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
-	@Column(name = "reservation_initial_date")
+	@Column(name = "reservation_initial_date", nullable = false)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date initialDate;
+	private Date reservationInitialDate;
 
-	@Column(name = "reservation_final_date")
+	@Column(name = "reservation_final_date", nullable = false)
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date finalDate;
-
-	@OneToOne(mappedBy = "reservation")
-	private PaymentProof paymentProof;
+	private Date reservationFinalDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "apartment_id", nullable = false)
 	private Apartment apartment;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "payment_proof_id", nullable = false)
+	private PaymentProof paymentProof;
+
 	// --Constructor, Getter y Setter
-	
-	public Reservation(){
-		
+
+	public Reservation() {
+
 	}
-	
+
+	public PaymentProof getPaymentProof() {
+		return paymentProof;
+	}
+
+	public void setPaymentProof(PaymentProof paymentProof) {
+		this.paymentProof = paymentProof;
+	}
+
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public User getUser() {
@@ -82,28 +82,28 @@ public class Reservation {
 		this.user = user;
 	}
 
-	public Date getInitialDate() {
-		return initialDate;
+	public String getReservationDescription() {
+		return reservationDescription;
 	}
 
-	public void setInitialDate(Date initialDate) {
-		this.initialDate = initialDate;
+	public void setReservationDescription(String reservationDescription) {
+		this.reservationDescription = reservationDescription;
 	}
 
-	public Date getFinalDate() {
-		return finalDate;
+	public Date getReservationInitialDate() {
+		return reservationInitialDate;
 	}
 
-	public void setFinalDate(Date finalDate) {
-		this.finalDate = finalDate;
+	public void setReservationInitialDate(Date reservationInitialDate) {
+		this.reservationInitialDate = reservationInitialDate;
 	}
 
-	public PaymentProof getPaymentProof() {
-		return paymentProof;
+	public Date getReservationFinalDate() {
+		return reservationFinalDate;
 	}
 
-	public void setPaymentProof(PaymentProof paymentProof) {
-		this.paymentProof = paymentProof;
+	public void setReservationFinalDate(Date reservationFinalDate) {
+		this.reservationFinalDate = reservationFinalDate;
 	}
 
 	public Apartment getApartment() {

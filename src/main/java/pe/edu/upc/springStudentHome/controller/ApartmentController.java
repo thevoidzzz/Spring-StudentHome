@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import pe.edu.upc.springStudentHome.model.entity.Apartment;
+import pe.edu.upc.springStudentHome.model.entity.User;
 import pe.edu.upc.springStudentHome.service.crud.ApartmentService;
-import pe.edu.upc.springStudentHome.service.crud.DistrictService;
+
+import pe.edu.upc.springStudentHome.service.crud.LocationService;
+
+import pe.edu.upc.springStudentHome.service.crud.UserService;
+
 
 @Controller
 @RequestMapping("/apartments")
@@ -26,13 +31,22 @@ public class ApartmentController {
 	private ApartmentService apartmentService;
 	
 	@Autowired 
-	private DistrictService districtService;
+	private LocationService locationService;
 	
+	
+	@Autowired
+	private UserService userService;
+		
 	@GetMapping		// GET: /apartments
 	public String listar( Model model ) {
 		try {
 			List<Apartment> apartments = apartmentService.getAll();
-			model.addAttribute("apartments", apartments);
+			model.addAttribute("apartments", apartments);			
+			List<User> users = userService.getAll();
+			model.addAttribute("users", users);	
+			//-----------------
+			Apartment apartmentSearch = new Apartment();
+			model.addAttribute("apartmentSearch", apartmentSearch);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
@@ -44,9 +58,9 @@ public class ApartmentController {
 	@GetMapping("{id}")		// GET: /apartments/{id}
 	public String findById(Model model, @PathVariable("id") Integer id) {
 		try {
-			Optional<Apartment> optional = apartmentService.findById(id);
+			Optional<Apartment> optional = apartmentService.findById(id);			
 			if(optional.isPresent()) {
-				model.addAttribute("apartment", optional.get());
+				model.addAttribute("apartment", optional.get());				
 				return "apartments/view"; // Archivo Html
 			}
 		} catch (Exception e) {
@@ -55,13 +69,15 @@ public class ApartmentController {
 		}
 		return "redirect:/apartments";	// url
 	}
-	
+		
 	@GetMapping("{id}/edit")		// GET: /apartments/{id}/edit
 	public String findById2(Model model, @PathVariable("id") Integer id) {
 		try {
 			Optional<Apartment> optional = apartmentService.findById(id);
+			
 			if(optional.isPresent()) {
 				model.addAttribute("apartmentEdit", optional.get());
+				model.addAttribute("locationList", locationService.getAll());				
 				return "apartments/edit";
 			}
 		} catch (Exception e) {
@@ -74,8 +90,9 @@ public class ApartmentController {
 	@PostMapping("save")	// GET: /apartments/save
 	public String saveEdit(Model model, @ModelAttribute("apartmentEdit") Apartment apartment) {
 		try {
-			Apartment apartmentReturn = apartmentService.update(apartment);
-			model.addAttribute("apartment", apartmentReturn);			
+			Apartment apartmentReturn = apartmentService.update(apartment);			
+			model.addAttribute("apartment", apartmentReturn);
+			
 			return "apartments/view"; // Archivo Html
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,22 +104,24 @@ public class ApartmentController {
 	@GetMapping("new")		// GET: /apartments/{id}/edit
 	public String newItem(Model model) {
 		try {
-			Apartment apartment = new Apartment();			
+			Apartment apartment = new Apartment();				
 			model.addAttribute("apartmentNew", apartment);
-			model.addAttribute("districtList", districtService.getAll());
+			model.addAttribute("locationList", locationService.getAll());			
 			return "apartments/new";
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
 		return "redirect:/apartments";	// url
-	}
+	}	
 	
-	@PostMapping("savenew")	// GET: /apartments/savenew
+	
+	@PostMapping("savenew")	
 	public String saveNew(Model model, @ModelAttribute("apartmentNew") Apartment apartment) {
 		try {
-			Apartment apartmentReturn = apartmentService.create(apartment);
-			model.addAttribute("apartment", apartmentReturn);			
+			Apartment apartmentReturn = apartmentService.create(apartment);			
+			model.addAttribute("apartment", apartmentReturn);	
+			
 			return "apartments/view"; // Archivo Html
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,6 +130,19 @@ public class ApartmentController {
 		return "redirect:/apartments";
 	}	
 	
+	@GetMapping("{id}/del")
+	public String delApartment(@PathVariable("id") Integer id ) {
+		try {
+			Optional<Apartment> optional = apartmentService.findById(id);
+			if (optional.isPresent()) {
+				apartmentService.deleteById(id);
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getMessage());
+		}
+		return "redirect:/apartments";
+	}
 	
 
 }
