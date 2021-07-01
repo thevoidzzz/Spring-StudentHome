@@ -12,4 +12,5 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
 	List<Location> findByCity(String city);
 
 	List<Location> findByStateProvince(String stateProvince);
+	
 }

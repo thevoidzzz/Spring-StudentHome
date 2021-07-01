@@ -1,9 +1,8 @@
 package pe.edu.upc.springStudentHome.model.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,217 +11,138 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.persistence.Table;
+
+import pe.edu.upc.springStudentHome.util.Segment;
 
 @Entity
-@Table(name = "Users", indexes = { @Index(columnList = "user_name", name = "users_index_name") }, uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "user_email" }) })
-@SequenceGenerator(name = "sequenceUser", sequenceName = "Users_user_id_seq", initialValue = 1, allocationSize = 1)
+@Table(name = "users")
 public class User {
-
+	// EmbeddedId primary key
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceUser")
-	@Column(name = "user_id", columnDefinition = "NUMERIC(4)", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "user_name", length = 20, nullable = false)
-	private String userName;
+	@Column(name = "username", length = 30, nullable = false)
+	private String username;
 
-	@Column(name = "user_dni", length = 8, nullable = false)
-	private String userDni;
+	@Column(name = "password", length = 60, nullable = false)
+	private String password;
 
-	@Column(name = "user_phone", length = 12, nullable = false)
-	private String userPhone;
+	@Column(name = "enable")
+	private boolean enable;
 
-	@Column(name = "user_email", length = 30, nullable = false)
-	private String userEmail;
+	@Column(name = "segment", nullable = false)
+	private Segment segment;
 
-	@Column(name = "user_password", length = 20, nullable = false)
-	private String userPassword;
+	@Column(name = "segment_id", nullable = false)
+	private Integer idSegment;
 
-	@Column(name = "user_biography", length = 500)
-	private String userBiography;
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Authority> authorities;
 
-	@Column(name = "user_birthday", nullable = false)
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date userBirthday;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "student_id")
+	private Student student;
 
-	@Column(name = "enabled")
-	private Boolean enabled;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "lessor_id")
+	private Lessor lessor;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "location_id", nullable = false)
-	private Location location;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "role_id", nullable = false)
-	private Role role;
-
-	@OneToMany(mappedBy = "user")
-	private List<Comment> comments;
-
-	@OneToMany(mappedBy = "user")
-	private List<Reservation> reservations;
-
-	@OneToMany(mappedBy = "user")
-	private List<Apartment> apartments;
-
-	@OneToMany(mappedBy = "user")
-	private List<UserSubscription> userSubscriptions;
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_languages", joinColumns = {
-			@JoinColumn(referencedColumnName = "user_id", name = "user_id") }, inverseJoinColumns = {
-					@JoinColumn(referencedColumnName = "language_id", name = "language_id") })
-	private Set<Language> languages;
-
-	// --Constructor, Getter y Setter
 	public User() {
-		reservations = new ArrayList<Reservation>();
-		apartments = new ArrayList<Apartment>();
-		comments = new ArrayList<Comment>();
+		this.enable = true;
+		this.authorities = new ArrayList<>();
+	}
 
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+		this.enable = true;
+		this.authorities = new ArrayList<>();
+	}
+
+	public void addAuthority(String auth) {
+		Authority authority = new Authority();
+		authority.setAuthority(auth);
+		authority.setUser(this);
+
+		this.authorities.add(authority);
+	}
+
+	public Segment getSegment() {
+		return segment;
+	}
+
+	public void setSegment(Segment segment) {
+		this.segment = segment;
+	}
+
+	public Integer getIdSegment() {
+		return idSegment;
+	}
+
+	public void setIdSegment(Integer idSegment) {
+		this.idSegment = idSegment;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public List<Apartment> getApartments() {
-		return apartments;
-	}
-
-	public void setApartments(List<Apartment> apartments) {
-		this.apartments = apartments;
-	}
-
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public List<UserSubscription> getUserSubscriptions() {
-		return userSubscriptions;
-	}
-
-	public void setUserSubscriptions(List<UserSubscription> userSubscriptions) {
-		this.userSubscriptions = userSubscriptions;
-	}
-
-	public Set<Language> getLanguages() {
-		return languages;
-	}
-
-	public void setLanguages(Set<Language> languages) {
-		this.languages = languages;
-	}
-
-	public String getUserBiography() {
-		return userBiography;
-	}
-
-	public void setUserBiography(String userBiography) {
-		this.userBiography = userBiography;
-	}
-
-	public Date getUserBirthday() {
-		return userBirthday;
-	}
-
-	public void setUserBirthday(Date userBirthday) {
-		this.userBirthday = userBirthday;
-	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getUserDni() {
-		return userDni;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setUserDni(String userDni) {
-		this.userDni = userDni;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getUserPhone() {
-		return userPhone;
+	public boolean isEnable() {
+		return enable;
 	}
 
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	public Student getStudent() {
+		return student;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
+	public Lessor getLessor() {
+		return lessor;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public void setLessor(Lessor lessor) {
+		this.lessor = lessor;
 	}
 
-	public Boolean getEnabled() {
-		return enabled;
+	public List<Authority> getAuthorities() {
+		return authorities;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public List<Reservation> getReservations() {
-		return reservations;
-	}
-
-	public void setReservations(List<Reservation> reservations) {
-		this.reservations = reservations;
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
 	}
 
 }

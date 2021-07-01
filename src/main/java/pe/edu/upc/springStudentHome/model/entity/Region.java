@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Regions")
-@SequenceGenerator(name = "sequenceRegion", sequenceName = "Regions_region_id_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "sequenceRegion", sequenceName = "Regions_region_id_seq", initialValue = 10, allocationSize = 1)
 public class Region {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceRegion")

@@ -1,100 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>StudentHome</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
-    <link rel="stylesheet" th:href="@{/vendors/iconfonts/ionicons/dist/css/ionicons.css}">
-    <link rel="stylesheet" th:href="@{/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css}">
-    <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
-    <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.addons.css}">
-    <!-- endinject -->
-    <!-- plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <link rel="stylesheet" th:href="@{/css/shared/style.css}">
-    <!-- endinject -->
-    <link rel="shortcut icon" th:href="@{/favicon.png}" />
-  </head>
-  <body>
-    <div class="container-scroller">
-      <div class="container-fluid page-body-wrapper full-page-wrapper">
-        <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
-          <div class="row w-100">
-            <div class="col-lg-4 mx-auto">
-              <div class="auto-form-wrapper">
-                <form action="#">
-                  <div class="form-group">
-                    <label class="label">Usuario</label>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="thevoidz">
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <i class="mdi mdi-check-circle-outline"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="label">Contraseña</label>
-                    <div class="input-group">
-                      <input type="password" class="form-control" placeholder="*********">
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <i class="mdi mdi-check-circle-outline"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-primary submit-btn btn-block">Login</button>
-                  </div>
-                  <div class="form-group d-flex justify-content-between">
-                    <div class="form-check form-check-flat mt-0">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" checked> Mantener Inicio de sesión </label>
-                    </div>
-                    <a href="#" class="text-small forgot-password text-black">Recuperar contraseña</a>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-block g-login">
-                      <img class="mr-3" th:src="@{/images/file-icons/icon-google.svg}" alt="">Logueate con Google</button>
-                  </div>
-                  <div class="text-block text-center my-3">
-                    <span class="text-small font-weight-semibold">No estas registrado?</span>
-                    <a class="text-black text-small">Crea una nueva cuenta</a>
-                  </div>
-                </form>
-              </div>
-              <ul class="auth-footer">
-                <li>
-                  <a href="#">Conditions</a>
-                </li>
-                <li>
-                  <a href="#">Help</a>
-                </li>
-                <li>
-                  <a href="#">Terms</a>
-                </li>
-              </ul>
-              <p class="footer-text text-center">Copyright © 2021 Astra. All rights reserved.</p>              
-            </div>
-          </div>
-        </div>
-        <!-- content-wrapper ends -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Home</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300, 400, 500" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" th:href="@{/dist/style.css}">
+
+</head>
+<body>
+
+<section class="user">
+  <div class="user_options-container">
+    <div class="user_options-text">
+      <div class="user_options-unregistered">
+        <h2 class="user_unregistered-title">Don't you have an account yet?</h2>
+        <p class="user_unregistered-text">What are you waiting for to create yours? Take advantage of having an account.</p>
+       <button class="user_unregistered-signup" id="signup-button">Register</button>
       </div>
-      <!-- page-body-wrapper ends -->
+
+      <div class="user_options-registered">
+        <h2 class="user_registered-title">Do you already have an account?</h2>
+        <p class="user_registered-text">Start the adventure of looking for an apartment as if it were your home</p>
+        <button class="user_registered-login" id="login-button">Login</button>
+      </div>
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
-    <script th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
-    <!-- endinject -->
-    <!-- inject:js -->
-    <script th:src="@{/js/shared/off-canvas.js}"></script>
-    <script th:src="@{/js/shared/misc.js}"></script>    
-  </body>
+    
+    <div class="user_options-forms" id="user_options-forms">
+      <div class="user_forms-login">
+        <h2 class="forms_title">Login</h2>
+        <form class="forms_form" th:action="@{/signin}" method="post">
+          <fieldset class="forms_fieldset">
+            <div class="forms_field">
+              <input type="text" placeholder="Enter Username" name="username" id="username" class="forms_field-input" required autofocus />
+            </div>
+            <div class="forms_field">
+              <input type="password" placeholder="Enter Password" name="password" id="password" class="forms_field-input" required />
+            </div>
+          </fieldset>
+          <div class="forms_buttons">
+            <button type="button" class="forms_buttons-forgot">Forgot your password?</button>
+            <input type="submit" value="Log In" class="forms_buttons-action">
+          </div>
+        </form>
+      </div>
+      <div class="user_forms-signup">
+        <h2 class="forms_title">Register</h2>
+        <form class="forms_form">
+          <fieldset class="forms_fieldset">
+            <div class="forms_field">
+              <input type="text" placeholder="Full Name" class="forms_field-input" required />
+            </div>
+            <div class="forms_field">
+              <input type="email" placeholder="Email" class="forms_field-input" required />
+            </div>
+            <div class="forms_field">
+              <input type="password" placeholder="Password" class="forms_field-input" required />
+            </div>
+          </fieldset>
+          <div class="forms_buttons">
+            <input type="submit" value="Sign up" class="forms_buttons-action">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- partial -->
+  <script th:src="@{/dist/script.js}"></script>
+
+</body>
+
 </html>

@@ -18,13 +18,13 @@ import pe.edu.upc.springStudentHome.service.crud.SubscriptionService;
 
 @Controller
 @RequestMapping("/subscriptions")
-@SessionAttributes("subscriptionEdit")  // Se utiliza para guardar el objeto en memoria, cuando se envia y retorna.
+@SessionAttributes("subscriptionEdit")  
 public class SubscriptionController {
 
 	@Autowired
 	private SubscriptionService subscriptionService;
 	
-	@GetMapping		// GET: /subscriptions
+	@GetMapping		
 	public String listar( Model model ) {
 		try {
 			List<Subscription> subscriptions = subscriptionService.getAll();
@@ -36,22 +36,22 @@ public class SubscriptionController {
 		return "subscriptions/list";
 	}
 	
-	@GetMapping("{id}")		// GET: /subscriptions/{id}
+	@GetMapping("{id}")		
 	public String findById(Model model, @PathVariable("id") Integer id) {
 		try {
 			Optional<Subscription> optional = subscriptionService.findById(id);
 			if(optional.isPresent()) {
 				model.addAttribute("subscription", optional.get());
-				return "redirect:/subscriptions"; // Archivo Html
+				return "redirect:/subscriptions"; 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return "redirect:/subscriptions";	// url
+		return "redirect:/subscriptions";	
 	}
 	
-	@GetMapping("{id}/edit")		// GET: /apartments/{id}/edit
+	@GetMapping("{id}/edit")		
 	public String findById2(Model model, @PathVariable("id") Integer id) {
 		try {
 			Optional<Subscription> optional = subscriptionService.findById(id);			
@@ -63,15 +63,15 @@ public class SubscriptionController {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return "redirect:/subscriptions";	// url
+		return "redirect:/subscriptions";	
 	}
 	
-	@PostMapping("save")	// GET: /subscriptions/save
+	@PostMapping("save")	
 	public String saveEdit(Model model, @ModelAttribute("subscriptionEdit") Subscription subscription) {
 		try {
 			Subscription subscriptionReturn = subscriptionService.update(subscription);			
 			model.addAttribute("subscription", subscriptionReturn);			
-			return "redirect:/subscriptions"; // Archivo Html
+			return "redirect:/subscriptions";
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
@@ -79,7 +79,7 @@ public class SubscriptionController {
 		return "redirect:/subscriptions";
 	}
 	
-	@GetMapping("new")		// GET: /subscriptions/{id}/edit
+	@GetMapping("new")		
 	public String newItem(Model model) {
 		try {
 			Subscription subscription = new Subscription();				
@@ -89,15 +89,15 @@ public class SubscriptionController {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return "redirect:/subscriptions";	// url
+		return "redirect:/subscriptions";	
 	}
 	
-	@PostMapping("savenew")	// GET: /subscriptions/savenew
+	@PostMapping("savenew")	
 	public String saveNew(Model model, @ModelAttribute("subscriptionNew") Subscription subscription) {
 		try {
 			Subscription subscriptionReturn = subscriptionService.create(subscription);
 			model.addAttribute("subscription", subscriptionReturn);				
-			return "redirect:/subscriptions"; // Archivo Html
+			return "redirect:/subscriptions"; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());

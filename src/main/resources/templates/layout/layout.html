@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,10 +70,12 @@
 <link th:href="@{/assets/plugins/iconfonts/icons.css}" rel="stylesheet" />
 <link th:href="@{/assets/fonts/fonts/font-awesome.min.css}"
 	rel="stylesheet">
-	
-	<!-- Notifications  css -->
-		<link th:href="@{/assets/plugins/notify/css/jquery.growl.css}" rel="stylesheet" />
-		<link th:href="@{/assets/plugins/notify/css/notifIt.css}" rel="stylesheet" />
+
+<!-- Notifications  css -->
+<link th:href="@{/assets/plugins/notify/css/jquery.growl.css}"
+	rel="stylesheet" />
+<link th:href="@{/assets/plugins/notify/css/notifIt.css}"
+	rel="stylesheet" />
 
 <!-- Rating css-->
 <link rel="stylesheet"
@@ -117,7 +119,7 @@
 			<div class="app-header header d-flex" th:fragment="header">
 				<div class="container-fluid">
 					<div class="d-flex">
-						<a class="header-brand" href="index.html"> <img
+						<a class="header-brand" th:href="@{/home/dashboard}"> <img
 							th:src="@{/student-home-logo.png}"
 							class="header-brand-img main-logo" alt="Hogo logo">
 						</a>
@@ -213,9 +215,9 @@
 								<a class="nav-link leading-none siderbar-link"
 									data-toggle="sidebar-right" data-target=".sidebar-right"> <span
 									class="mr-3 d-none d-lg-block "> <span
-										class="text-gray-white"><span class="ml-2">Anthony</span></span>
+										class="text-gray-white"><span class="ml-2" sec:authentication="name">Anthony</span></span>
 								</span> <span class="avatar avatar-md brround"><img
-										th:src="@{/assets/images/users/female/33.png}"
+										th:src="@{/images/tangana.jpg}"
 										alt="Profile-img" class="avatar avatar-md brround"></span>
 								</a>
 								<div
@@ -243,7 +245,7 @@
 												<div>Inbox</div>
 											</div>
 											<div class="col-6 text-center">
-												<a class="" href=""><i
+												<a class="" th:href="@{/logout}"><i
 													class="dropdown-icon mdi mdi-logout-variant fs-30 m-0 leading-tight"></i></a>
 												<div>Sign out</div>
 											</div>
@@ -272,14 +274,11 @@
 					<div class="app-sidebar__user pb-0">
 						<div class="user-body">
 							<span class="avatar avatar-xxl brround text-center cover-image"
-								data-image-src="@{/assets/images/users/female/33.png}"></span>
+								th:data-image-src="@{/images/tangana.jpg}"></span>
 						</div>
 						<div class="user-info">
-							<a href="#" class="ml-2"><span
-								class="text-dark app-sidebar__user-name font-weight-semibold">Anthony
-									Tangana</span><br> <span
-								class="text-muted app-sidebar__user-name text-sm">
-									Administrator </span> </a>
+							<a href="#" class="ml-2"><span sec:authentication="name"
+								class="text-dark app-sidebar__user-name font-weight-semibold"></span><br>  </a>
 						</div>
 					</div>
 
@@ -293,7 +292,7 @@
 										class="fa fa-envelope fs-17"></i></a></li>
 								<li><a href="#index3" data-toggle="tab"><i
 										class="fa fa-user fs-17"></i></a></li>
-								<li><a href="login.html" title="logout"><i
+								<li><a th:href="@{/logout}" title="logout"><i
 										class="fa fa-power-off fs-17"></i></a></li>
 							</ul>
 						</div>
@@ -302,34 +301,36 @@
 						<div class="tab-content">
 							<div class="tab-pane active " id="index1">
 								<ul class="side-menu toggle-menu">
-									<li><a class="side-menu__item" th:href="@{/apartments}"><i
+									<li sec:authorize="isAuthenticated()"><a class="side-menu__item" th:href="@{/apartments}"><i
 											class="side-menu__icon typcn typcn-device-desktop"></i><span
 											class="side-menu__label">Apartments</span></a></li>
-									<li><a class="side-menu__item" th:href="@{/users}"><i
+									<li sec:authorize="hasRole('ROLE_STUDENT')"><a class="side-menu__item" th:href="@{/reservations}"><i
+											class="side-menu__icon typcn typcn-device-desktop"></i><span
+											class="side-menu__label">My Reservations</span></a></li>
+									<li sec:authorize="hasRole('ROLE_ADMIN')"><a class="side-menu__item" th:href="@{/users/students}"><i
 											class="side-menu__icon typcn typcn-th-large-outline"></i><span
 											class="side-menu__label">Students</span></a></li>
-									<li><a class="side-menu__item" th:href="@{/users}"><i
+									<li sec:authorize="hasRole('ROLE_ADMIN')"><a class="side-menu__item" th:href="@{/users/lessors}"><i
 											class="side-menu__icon typcn typcn-arrow-move-outline"></i><span
 											class="side-menu__label">Lessors</span></a></li>
-									<li class="slide"><a class="side-menu__item"
+									<li sec:authorize="hasRole('ROLE_ADMIN')" class="slide"><a class="side-menu__item"
 										data-toggle="slide" th:href="@{/error}"><i
 											class="side-menu__icon typcn typcn-th-large-outline"></i><span
 											class="side-menu__label">Reports</span><i
 											class="angle fa fa-angle-right"></i></a>
 										<ul class="slide-menu">
-											<li><a th:href="@{/error}" class="slide-item"> Most
-													rented apartments </a></li>
-											<li><a th:href="@{/error}" class="slide-item"> Users
-													with the most subscriptions </a></li>
-											<li><a th:href="@{/error}" class="slide-item">
-													Students with more rents</a></li>
-											<li><a th:href="@{/error}" class="slide-item">
-													Lessors with the most publications </a></li>
+											<li><a th:href="@{/reports}" class="slide-item"> Apartments by City </a></li>											
 										</ul></li>
-									<li class="slide"><a class="side-menu__item"
+									<li sec:authorize="isAuthenticated()" class="slide"><a class="side-menu__item"
 										th:href="@{/subscriptions}"><i
 											class="side-menu__icon typcn typcn-chart-pie-outline"></i><span
 											class="side-menu__label">Subscriptions</span></a></li>
+									<li><a class="side-menu__item" th:href="@{/payments}"><i
+											class="side-menu__icon typcn typcn-device-desktop"></i><span
+											class="side-menu__label">My Current Subscription</span></a></li>
+									<li sec:authorize="isAuthenticated()"><a class="side-menu__item" th:href="@{/complaints}"><i
+											class="side-menu__icon typcn typcn-device-desktop"></i><span
+											class="side-menu__label">Complaint Book</span></a></li>
 								</ul>
 							</div>
 							<div class="tab-pane border-top" id="index2">
@@ -769,10 +770,10 @@
 								<div class="card-body p-0">
 									<div class="header-user text-center mt-4 pb-4">
 										<span class="avatar avatar-xxl brround"><img
-											th:src="@{/assets/images/users/female/33.png}"
+											th:src="@{/images/tangana.jpg}"
 											alt="Profile-img" class="avatar avatar-xxl brround"></span>
 										<div
-											class="dropdown-item text-center font-weight-semibold user h3 mb-0">Anthony</div>
+											class="dropdown-item text-center font-weight-semibold user h3 mb-0"><span sec:authentication="name"></span></div>
 										<small>Administrador</small>
 										<div class="card-body">
 											<div class="form-group ">
@@ -812,9 +813,9 @@
 												<div>Inbox</div>
 											</div>
 											<div class="col-4 text-center">
-												<a class="" href=""><i
+												<a class="" th:href="@{'/users/students/' + ${student.id}}" th:each="student : ${students}"><i
 													class="dropdown-icon mdi mdi-tune fs-30 m-0 leading-tight"></i></a>
-												<div>Settings</div>
+												<div>View Profile</div>
 											</div>
 											<div class="col-4 text-center">
 												<a class="" href=""><i
@@ -1307,8 +1308,8 @@
 	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
 	<script th:src="@{/assets/plugins/rating/jquery.barrating.js}"></script>
 	<script th:src="@{/assets/plugins/rating/js/examples.js}"></script>
-	
-	
+
+
 
 	<!-- Custom js-->
 	<script th:src="@{/assets/js/custom.js}"></script>

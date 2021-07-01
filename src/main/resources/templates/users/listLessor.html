@@ -41,9 +41,27 @@
 					<div class="page-header">
 						<ol class="breadcrumb">
 							<!-- breadcrumb -->
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item"><a th:href="@{home/dashboard}">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Lessors</li>
 						</ol>
+						<div class="col-lg-12 col-xl-3">
+							<div class="card">
+								<div class="row card-body p-2">
+									<div class="col-sm-12 p-0">
+										<form th:action="@{/search/lessors}" th:object="${lessorSearch}"
+											method="get">
+											<div class="input-group">
+												<input type="search" class="form-control"
+													placeholder="Search ..." th:field="*{lessorName}"> <span
+													class="input-group-append">
+													<button class="btn btn-primary" type="submit">Search</button>
+												</span>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 						<!-- End breadcrumb -->
 					</div>
 					<!-- End page-header -->
@@ -67,7 +85,7 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr th:each="user :${userLessor}">
+													<tr th:each="lessor :${lessors}">
 														<td class="align-middle text-center">
 															<div
 																class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
@@ -78,22 +96,26 @@
 														</td>
 														<td class="align-middle text-center"><img alt="image"
 															class="avatar avatar-md rounded-circle"
-															src="../assets/images/users/female/26.jpg"></td>
-														<td th:text="${user.userName}"
+															th:src="@{/images/michulon-2.jpg}"></td>
+														<td th:text="${lessor.lessorName}"
 															class="text-nowrap align-middle"></td>
-														<td th:text="${user.userEmail}"
+														<td th:text="${lessor.lessorEmail}"
 															class="text-nowrap align-middle"><span></span></td>
 
 														<td class="text-center align-middle">
 															<div class="btn-group align-top">
-																<a th:href="@{/users/editLessor}"><button
+																<a th:href="@{'/users/lessors/' + ${lessor.id}}"><button
 																		class="btn btn-sm btn-primary badge"
 																		data-target="#user-form-modal" data-toggle="modal"
-																		type="button">Edit</button></a>
-																<button class="btn btn-sm btn-primary badge"
-																	type="button">
-																	<i class="fa fa-trash"></i>
-																</button>
+																		type="button">View</button></a> <a
+																	th:href="@{'/users/lessors/' + ${lessor.id} + '/edit'}"><button
+																		class="btn btn-sm btn-primary badge"
+																		data-target="#user-form-modal" data-toggle="modal"
+																		type="button">Edit</button></a> <a
+																	th:href="@{'/users/lessors/' + ${lessor.id} + '/del'}"><button
+																		type="button" class="btn btn-sm btn-danger badge">
+																		<i class="fa fa-trash"></i>
+																	</button> </a>
 															</div>
 														</td>
 													</tr>
@@ -127,6 +149,7 @@
 						</div>
 
 
+
 						<!-- Right-sidebar-->
 						<div th:replace="layout/layout :: sidebar"></div>
 						<!-- End Rightsidebar-->
@@ -134,11 +157,10 @@
 						<!--footer-->
 						<footer th:replace="layout/layout :: footer"></footer>
 						<!-- End Footer-->
+
 					</div>
 				</div>
 			</div>
-
-
 
 			<!-- End Page -->
 

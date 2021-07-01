@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -17,39 +19,37 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import pe.edu.upc.springStudentHome.model.entity.Apartment;
 import pe.edu.upc.springStudentHome.model.entity.Comment;
 
+import pe.edu.upc.springStudentHome.security.MyUserDetails;
 import pe.edu.upc.springStudentHome.service.crud.ApartmentService;
 import pe.edu.upc.springStudentHome.service.crud.CommentService;
 
-
 @Controller
 @RequestMapping()
-@SessionAttributes("commentEdit") // Se utiliza para guardar el objeto en memoria, cuando se envia y retorna.
+@SessionAttributes("commentEdit")
 public class CommentController {
 
 	@Autowired
 	private CommentService commentService;
 
-	
-
 	@Autowired
 	private ApartmentService apartmentService;
 
-	@GetMapping("/apartments/{apartmentId}/comments") // GET: /apartments/{id}
+	@GetMapping("/apartments/{apartmentId}/comments")
 	public String findByIdCommentListar(Model model, @PathVariable("apartmentId") Integer id) {
 		try {
 			List<Comment> comments = commentService.listCommentByApartmentId(id);
-			model.addAttribute("comments", comments);			
+			model.addAttribute("comments", comments);
 
 			Optional<Apartment> optional = apartmentService.findById(id);
 			if (optional.isPresent()) {
 				model.addAttribute("apartment", optional.get());
-				return "apartments/comments/lista"; // Archivo Html
+				return "apartments/comments/lista";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return "redirect:/apartments"; // url
+		return "redirect:/apartments";
 	}
 
 	@PostMapping("/comments/{commentId}/save")
@@ -59,7 +59,7 @@ public class CommentController {
 			Comment commentReturn = commentService.edit(comment, id);
 			model.addAttribute("comment", commentReturn);
 
-			return "redirect:/apartments/" + id + "/comments/"; // Archivo Html
+			return "redirect:/apartments/" + id + "/comments/";
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
@@ -67,7 +67,7 @@ public class CommentController {
 		return "redirect:/apartments/comments/lista";
 	}
 
-	@GetMapping("/apartments/{apartmentId}/comments/new") // GET: /apartments/{id}/edit
+	@GetMapping("/apartments/{apartmentId}/comments/new")
 	public String newItemComment(Model model, @PathVariable("apartmentId") Integer id) {
 		try {
 			Comment comment = new Comment();
@@ -78,18 +78,22 @@ public class CommentController {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return "redirect:/apartments/comments/lista"; // url
+		return "redirect:/apartments/comments/lista"; 
 	}
 
-	@PostMapping("/apartments/{apartmentId}/comments/savenew") // GET: /apartments/savenew
+	@PostMapping("/apartments/{apartmentId}/comments/savenew") 
 	public String saveNewComment(Model model, @ModelAttribute("commentNew") Comment comment,
 			@PathVariable("apartmentId") Integer id) {
 		try {
+			Comment commentC = new Comment();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+
 			Comment commentReturn = commentService.create(comment, id);
 			model.addAttribute("comment", commentReturn);
 			System.out.println(comment);
 
-			return "redirect:/apartments/" + id + "/comments/"; // Archivo Html
+			return "redirect:/apartments/" + id + "/comments/"; 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
@@ -97,7 +101,7 @@ public class CommentController {
 		return "redirect:/apartments/comments/lista";
 	}
 
-	@GetMapping("/comments/{commentId}/edit") // GET: /apartments/{id}/edit
+	@GetMapping("/comments/{commentId}/edit") 
 	public String FindById(Model model, @PathVariable("commentId") Integer commentId,
 			@ModelAttribute("commentEdit") Comment commentEdit) {
 
@@ -115,7 +119,7 @@ public class CommentController {
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return "redirect:/home/dashboard"; // url
+		return "redirect:/home/dashboard"; 
 	}
 
 	@GetMapping("/comments/{commentId}/del")

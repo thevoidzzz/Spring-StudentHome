@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +44,7 @@
 							<li class="breadcrumb-item active" aria-current="page">Subscriptions</li>
 						</ol>
 						<div class="col col-auto">
-							<a th:href="@{'/subscriptions/new'}"
+							<a th:href="@{'/subscriptions/new'}" sec:authorize="hasRole('ROLE_ADMIN')"
 								class="btn btn-success mt-4 mt-sm-0"><i
 								class="fe fe-plus mr-1 mt-1"></i> New Subscription </a>
 						</div>
@@ -87,9 +87,11 @@
 										th:text="${subscription.subscriptionAdvantage3}"> </strong></li>
 								</ul>
 								<div class="panel-footer text-center">
-									<a class="btn btn-lg btn-primary btn-block" href="#">Buy
+								<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-lg btn-primary btn-block" th:href="@{'/subscriptions/' + ${subscription.id} + '/payments'}">View Users</a>
+								<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-lg btn-success btn-block" th:href="@{'/subscriptions/' + ${subscription.id} + '/edit'}">Edit</a>	
+									<a class="btn btn-lg btn-primary btn-block" th:href="@{'/subscriptions/' + ${subscription.id} + '/payments/new'}">Buy
 										Now!</a>
-										<a class="btn btn-lg btn-success btn-block" th:href="@{'/subscriptions/' + ${subscription.id} + '/edit'}">Edit</a>
+																			
 								</div>
 							</div>
 						</div>

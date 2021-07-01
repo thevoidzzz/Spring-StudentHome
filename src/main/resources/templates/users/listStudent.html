@@ -48,11 +48,11 @@
 							<div class="card">
 								<div class="row card-body p-2">
 									<div class="col-sm-12 p-0">
-										<form th:action="@{/search/users}" th:object="${userSearch}"
+										<form th:action="@{/search/students}" th:object="${studentSearch}"
 											method="get">
 											<div class="input-group">
 												<input type="search" class="form-control"
-													placeholder="Search ..." th:field="*{userName}"> <span
+													placeholder="Search ..." th:field="*{studentName}"> <span
 													class="input-group-append">
 													<button class="btn btn-primary" type="submit">Search</button>
 												</span>
@@ -85,7 +85,7 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr th:each="user :${users}">
+													<tr th:each="student :${students}">
 														<td class="align-middle text-center">
 															<div
 																class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
@@ -96,23 +96,23 @@
 														</td>
 														<td class="align-middle text-center"><img alt="image"
 															class="avatar avatar-md rounded-circle"
-															src="../assets/images/users/female/26.jpg"></td>
-														<td th:text="${user.userName}"
+															th:src="@{/images/michulon.jpg}"></td>
+														<td th:text="${student.studentName}"
 															class="text-nowrap align-middle"></td>
-														<td th:text="${user.userEmail}"
+														<td th:text="${student.studentEmail}"
 															class="text-nowrap align-middle"><span></span></td>
 
 														<td class="text-center align-middle">
 															<div class="btn-group align-top">
-																<a th:href="@{'/users/' + ${user.id}}"><button
+																<a th:href="@{'/users/students/' + ${student.id}}"><button
 																		class="btn btn-sm btn-primary badge"
 																		data-target="#user-form-modal" data-toggle="modal"
 																		type="button">View</button></a> <a
-																	th:href="@{'/users/' + ${user.id} + '/edit'}"><button
+																	th:href="@{'/users/students/' + ${student.id} + '/edit'}"><button
 																		class="btn btn-sm btn-primary badge"
 																		data-target="#user-form-modal" data-toggle="modal"
 																		type="button">Edit</button></a> <a
-																	th:href="@{'/users/' + ${user.id} + '/del'}"><button
+																	th:href="@{'/users/students/' + ${student.id} + '/del'}"><button
 																		type="button" class="btn btn-sm btn-danger badge">
 																		<i class="fa fa-trash"></i>
 																	</button> </a>

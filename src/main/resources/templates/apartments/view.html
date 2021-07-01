@@ -1,9 +1,14 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link th:href="@{/css/rastreo.css}" rel="stylesheet">
+
+</head>
 </head>
 
 <body class="app sidebar-mini rtl">
@@ -81,32 +86,34 @@
 								<div class="card-body single-productslide">
 									<div class="product-gallery border">
 										<div class="product-item text-center">
-											<img th:src="@{/assets/images/products/apple-iphone7.jpg}"
-												alt="img">
+											<img th:src="@{/images/apartment.png}" alt="img">
 										</div>
 										<div class="product-sm-gallery">
 											<div class="item-gallery ">
-												<img
-													th:src="@{/assets/images/products/apple-iphone7-special.jpg}"
-													alt="img">
+												<img th:src="@{/images/apartment-2.jpg}" alt="img">
 											</div>
 											<div class="item-gallery">
-												<img th:src="@{/assets/images/products/samsung-galaxy.jpg}"
-													alt="img">
+												<img th:src="@{/images/apartment-3.jpg}" alt="img">
 											</div>
 											<div class="item-gallery">
-												<img th:src="@{/assets/images/products/xiaomi-mi.jpg}"
-													alt="img">
+												<img th:src="@{/images/apartment-4.jpg}" alt="img">
 											</div>
 										</div>
+
 									</div>
 									<div class="product-gallery-data mb-0">
-									<div class="contact-space">
-										<h3 class="mb-3 font-weight-semibold"
-											th:text="${apartment.apartmentName}"></h3>
-											<button type="button" class="btn btn-icon btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-whatsapp"></i></button></div>
+										<div class="contact-space">
+											<h3 class="mb-3 font-weight-semibold"
+												th:text="${apartment.apartmentName}"></h3>
+											<button type="button" class="btn btn-icon btn-primary"
+												data-toggle="modal" data-target="#exampleModal">
+												<i class="fa fa-whatsapp"></i>
+											</button>
+
+										</div>
 										<div class="mb-3">
-											<span class="font-weight-semibold h1 text-dark">$</span><span class="font-weight-semibold h1 text-dark"
+											<span class="font-weight-semibold h1 text-dark">$</span><span
+												class="font-weight-semibold h1 text-dark"
 												th:text="${apartment.apartmentPrice}"></span> <span
 												class="text-primary ml-2"><i
 												class="fa fa-info-circle"></i> 50% off</span>
@@ -114,25 +121,30 @@
 										<h6 class="font-weight-semibold mt-3">Description</h6>
 										<p class="text-muted"
 											th:text="${apartment.apartmentDescription}"></p>
-										
-											<dl class="product-gallery-data1">
-												<dt>Lessor</dt>
-												<dd th:text="${apartment.user.userName}"></dd>												
-											</dl>
-											
-										
+
+										<dl class="product-gallery-data1">
+											<dt>Lessor</dt>
+											<dd th:text="${apartment.lessor.lessorName}"></dd>
+										</dl>
+
+
 										<dl class="product-gallery-data1">
 											<dt>Date</dt>
 											<dd th:text="${apartment.initialDatePublication}"></dd>
 										</dl>
 										<dl class="product-gallery-data1">
 											<dt>Services</dt>
-											<dd th:text="${apartment.apartmentFeature}"></dd>
+											<span th:each="tag :${apartment.tags}"
+												th:text="${tag.tagName + ', '}"></span>
 										</dl>
 										<dl class="product-gallery-data1">
 											<dt>Location</dt>
 											<dd
 												th:text="${apartment.location.city + ', ' + apartment.location.country.countryName}"></dd>
+											<button type="button" class="btn btn-icon btn-primary"
+												data-toggle="modal" data-target="#exampleModal1">
+												<i class="fa fa-map-marker" aria-hidden="true"></i>
+											</button>
 										</dl>
 										<dl class="product-gallery-data1">
 											<dt>Rating</dt>
@@ -155,21 +167,34 @@
 													href="#"><i class="fa fa-star text-warning"></i></a> <a
 													href="#"><i class="fa fa-star-o text-warning"></i></a></li>
 											</ul>
-											<div class="label-rating ml-2">793 reviews</div>
+											<div class="label-rating ml-2">5 reviews</div>
 											<a
 												th:href="@{'/apartments/' + ${apartment.id} + '/comments'}"
 												class="btn btn-primary btn-sm"><i class="si si-eye mr-1"></i>View
-												Reviews</a>
+												Reviews</a> <a
+												th:href="@{'/apartments/' + ${apartment.id} + '/reservations'}"
+												sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_LESSOR')"
+												class="btn btn-primary btn-sm"><i class="si si-eye mr-1"></i>View
+												Reservations</a>
 										</div>
 
 									</div>
 								</div>
 								<div class="card-footer text-right">
-									<a th:href="@{'/apartments/' + ${apartment.id} + '/del'}"
+									<a th:href="@{'/apartments/add-tag/' + ${apartment.id}}"
+										class="btn btn-primary"
+										sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_LESSOR')">
+										Add tag </a> <a
+										sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_LESSOR')"
+										th:href="@{'/apartments/' + ${apartment.id} + '/del'}"
 										class="btn  btn-danger"> Delete </a> <a
+										sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_LESSOR')"
 										th:href="@{'/apartments/' + ${apartment.id} + '/edit'}"
-										class="btn  btn-success"> Edit </a> <a th:href="@{'/apartments/' + ${apartment.id} + '/newReservation'}"
-										class="btn  btn-info"> Rent </a>
+										class="btn  btn-success"> Edit </a> <a
+										sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_STUDENT')"
+										th:href="@{'/apartments/' + ${apartment.id} + '/reservations/new'}"
+										class="btn btn-info text-white"> Rent </a>
+
 								</div>
 
 							</div>
@@ -293,27 +318,72 @@
 					<!-- row end -->
 				</div>
 				<!--End side app-->
-				
-				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Lessor Contact Details</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">×</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<p><strong>Lessor: </strong> <span th:text="${apartment.user.userName}"></span> </p>
-									<p><strong>Email: </strong> <span th:text="${apartment.user.userEmail}"></span> </p>		
-									<p><strong>Contact Phone: </strong> <span th:text="${apartment.user.userPhone}"></span> </p>																
-								</div>
-								<div class="modal-footer">									
-									<button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
-								</div>
+
+				<div class="modal fade" id="exampleModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Lessor
+									Contact Details</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>
+									<strong>Lessor: </strong> <span
+										th:text="${apartment.lessor.lessorName}"></span>
+								</p>
+								<p>
+									<strong>Email: </strong> <span
+										th:text="${apartment.lessor.lessorEmail}"></span>
+								</p>
+								<p>
+									<strong>Contact Phone: </strong> <span
+										th:text="${apartment.lessor.lessorPhone}"></span>
+								</p>
+								<video id="video" autoplay="true" style="width: 100%"></video>
+								<script src="js/camera.js"></script>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-success"
+									data-dismiss="modal">Accept</button>
 							</div>
 						</div>
 					</div>
+				</div>
+
+				<div class="modal fade" id="exampleModal1" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">MAP</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<section class="differRastreo">
+									<div class="shadowRastreo">
+										<div class="col-sm">
+											<div id="map" style="position: initial;"></div>
+										</div>
+									</div>
+								</section>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-success"
+									data-dismiss="modal">Accept</button>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				<!-- Right-sidebar-->
 				<div th:replace="layout/layout :: sidebar"></div>
@@ -395,5 +465,11 @@
 	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
 	<script th:src="@{/assets/plugins/rating/jquery.barrating.js}"></script>
 	<script th:src="@{/assets/plugins/rating/js/examples.js}"></script>
+
+	<script th:src="@{/js/map.js}"></script>
+	<script th:src="@{/js/camera.js}"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap&libraries=&v=weekly"
+		defer></script>
 </body>
 </html>

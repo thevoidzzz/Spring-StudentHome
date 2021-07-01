@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Subscriptions")
-@SequenceGenerator(name = "Susbcriptions_subscription_id_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "Susbcriptions_subscription_id_seq", initialValue = 10, allocationSize = 1)
 public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Susbcriptions_subscription_id_seq")
@@ -38,13 +38,13 @@ public class Subscription {
 	@Column(name = "subscription_price", columnDefinition = "DECIMAL(8,2)", nullable = false)
 	private Float subscriptionPrice;
 
-	@OneToMany(mappedBy = "user")
-	private List<UserSubscription> userSubscriptions;
+	@OneToMany(mappedBy = "subscription")
+	private List<Payment> payments;
 
 	// --Constructor, Getter y Setter
 
 	public Subscription() {
-		userSubscriptions = new ArrayList<UserSubscription>();
+		payments = new ArrayList<Payment>();
 	}
 
 	public Integer getId() {

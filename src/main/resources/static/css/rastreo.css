@@ -1,0 +1,39 @@
+@charset "ISO-8859-1";
+
+.differRastreo {
+    margin-top: 10px;
+    margin-left: 100px;
+}
+
+.shadowRastreo {
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 20px 6px -17px #999;
+    z-index: 1000;
+    height: 650px;
+    width: 1300px;
+    margin-top: 20px;
+    background-color: rgb(255, 255, 255);
+}
+
+.get_aligned {
+	padding-top: 15px;
+	margin-left: 30px;
+}
+
+.get_aligned2 {
+	padding-top: 15px;
+	margin-left: 230px;
+}
+.details {
+	margin-left: 100px;
+	width: 350px;
+	height: 300px;
+}
+
+#map {	
+  height: 490px;
+  /* The height is 400 pixels */
+  width: 490px;
+  /* The width is the width of the web page */
+}

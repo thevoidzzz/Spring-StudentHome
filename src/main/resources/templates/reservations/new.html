@@ -35,15 +35,17 @@
 							</div>
 
 						</div>
-						
+
 					</div>
 					<!-- page-header -->
 					<div class="page-header">
 						<ol class="breadcrumb">
 							<!-- breadcrumb -->
 							<li class="breadcrumb-item"><a th:href="@{home/dashboard}">Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Add
-								new apartment</li>
+							<li class="breadcrumb-item">Apartment<span
+								th:each="reservation :${reservations}" class="ml-2"
+								th:text="${reservation.apartment.id}"></span></li>
+							<li class="breadcrumb-item active" aria-current="page">Reservation</li>
 						</ol>
 						<!-- End breadcrumb -->
 
@@ -51,115 +53,100 @@
 					<!-- End page-header -->
 
 					<!-- row -->
-					<div class="row">
+					<form
+						th:action="@{'/apartments/' + ${apartmentId} + '/reservations/savenew'}"
+						th:object="${reservationNew}" method="post">
+						<div class="row">
 							<div class="col-md-12">
 								<div class="card">
+									<div class="card-header">
+										<h3 class="mb-0 card-title">Reservation</h3>
+									</div>
 									<div class="card-body">
-										<div class="d-flex">
-											<a class="header-brand" href="index.html">
-												<img alt="logo" class="header-brand-img" src="../assets/images/brand/logo.png">
-											</a>
-											<div class="text-right ml-auto">
-												<h2 class="mb-1">Invoice #XXXX</h2>
-												<p class="mb-1"><span class="font-weight-semibold">Invoice Date:</span> <span></span> </p>
-												<p><span class="font-weight-semibold">Due Date :</span> 01 March  2020</p>
-											</div>
-										</div>
-										<hr>
 										<div class="row">
-											<div class="col-lg-6 ">
-												<p class="h3">Invoice Form:</p>
-												<address>
-													Street Address<br>
-													State, City<br>
-													Region, Postal Code<br>
-													yourdomain@example.com
-												</address>
+											<div class="col-md-8">
+
+												<!-- 												<div class="wd-200 mg-b-30"> -->
+												<!-- 													<select class="form-control" th:field="*{reservation.id}"> -->
+												<!-- 														<option th:each="r: ${listReservations}" th:value="${r.id}" -->
+												<!-- 															th:text="${r.reservationPrice}" -->
+												<!-- 															th:selected="(${r.id} == *{reservation.id})"></option> -->
+												<!-- 													</select> -->
+												<!-- 												</div> -->
+
+												<div class="wd-200 mg-b-30">
+													<label for="reservationInitialDate" class="form-label">Initial
+														Date</label>
+													<div class="input-group">
+
+														<div class="input-group-prepend">
+															<div class="input-group-text">
+																<i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+															</div>
+														</div>
+														<input class="form-control fc-datepicker"
+															placeholder="MM/DD/YYYY" type="text" name="reservationInitialDate" id= "reservationInitialDate"
+															th:field="*{reservationInitialDate}">
+													</div>
+												</div>
+												<div class="wd-200 mg-b-30">
+													<label for="reservationFinalDate" class="form-label">Final
+														Date</label>
+													<div class="input-group">
+
+														<div class="input-group-prepend">
+															<div class="input-group-text">
+																<i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+															</div>
+														</div>
+														<input class="form-control fc-datepicker"
+															placeholder="MM/DD/YYYY" type="text" name="reservationFinalDate" id= "reservationFinalDate"
+															th:field="*{reservationFinalDate}">
+													</div>
+												</div>													
 											</div>
-											<div class="col-lg-6 text-right">
-												<p class="h3">Invoice To:</p>
-												<address>
-													Street Address<br>
-													State, City<br>
-													Region, Postal Code<br>
-													ypurdomain@example.com
-												</address>
+											<!-- 											<div class="col-md-6"> -->
+											<!-- 												<div class="form-group"> -->
+											<!-- 													<label class="form-label">Enter Name</label> -->
+											<!-- 													<input type="text" class="form-control" name="example-text-input" placeholder="Name"> -->
+											<!-- 												</div> -->
+											<!-- 												<div class="form-group"> -->
+											<!-- 													<label class="form-label">Enter Name</label> -->
+											<!-- 													<input type="text" class="form-control" name="example-text-input" placeholder="Name"> -->
+											<!-- 												</div> -->
+											<!-- 												<div class="form-group"> -->
+											<!-- 													<label class="form-label">Password</label> -->
+											<!-- 													<input type="password" class="form-control" name="example-password-input" placeholder="Password.."> -->
+											<!-- 												</div> -->
+											<!-- 											</div> -->
+											<div class="col-md-12 ">
+												<div class="form-group mt-4">
+													<label for="reservationDescription" class="form-label">Description</label>
+													<textarea class="form-control"
+														name="reservationDescription" rows="4"
+														id="reservationDescription" placeholder="Escribe aquí..."
+														th:field="*{reservationDescription}"></textarea>
+												</div>
+
+												<label class="form-label">Upload Photo</label>
+												<div class="card-body">
+													<input type="file" class="dropify" />
+												</div>
+												<div class="card-footer text-right">
+													<a th:href="@{/reservations}" class="btn  btn-danger">
+														Cancel </a>
+													<button class="btn btn-success" type="submit"
+														th:href="@{/reservations}">Save</button>
+												</div>
 											</div>
 										</div>
-										<div class="table-responsive push">
-											<table class="table table-bordered table-hover mb-0">
-												<tbody><tr class=" ">
-													<th class="text-center " style="width: 1%"></th>
-													<th>Item</th>
-													<th class="text-center" style="width: 1%">Quantity</th>
-													<th class="text-right">Unit Price</th>
-													<th class="text-right">Sub Total</th>
-												</tr>
-												<tr>
-													<td class="text-center">1</td>
-													<td>
-														<p class="font-w600 mb-1">Logo Design</p>
-														<div class="text-muted"><div class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</div></div>
-													</td>
-													<td class="text-center">2</td>
-													<td class="text-right">$674</td>
-													<td class="text-right">$1,308</td>
-												</tr>
-												<tr>
-													<td class="text-center">2</td>
-													<td>
-														<p class="font-w600 mb-1">Website wireframe for 2 pages</p>
-														<div class="text-muted">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</div>
-													</td>
-													<td class="text-center">4</td>
-													<td class="text-right">$1,500</td>
-													<td class="text-right">$6,000</td>
-												</tr>
-												<tr>
-													<td class="text-center">3</td>
-													<td>
-														<p class="font-w600 mb-1">PSD to HTML coding</p>
-														<div class="text-muted">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</div>
-													</td>
-													<td class="text-center">3</td>
-													<td class="text-right">$530</td>
-													<td class="text-right">$1,690</td>
-												</tr>
-												<tr>
-													<td class="text-center">4</td>
-													<td>
-														<p class="font-w600 mb-1">E-commerce Development</p>
-														<div class="text-muted">When our power of choice is untrammelled and when nothing prevents our being able</div>
-													</td>
-													<td class="text-center">2</td>
-													<td class="text-right">$800</td>
-													<td class="text-right">$1,600</td>
-												</tr>
-												<tr>
-													<td class="text-center">5</td>
-													<td>
-														<p class="font-w600 mb-1">Design and layout of 2 pages in Photoshop</p>
-														<div class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</div>
-													</td>
-													<td class="text-center">2</td>
-													<td class="text-right">$720</td>
-													<td class="text-right">$1,440</td>
-												</tr>
-												<tr>
-													<td colspan="4" class="font-weight-bold text-uppercase text-right">Total</td>
-													<td class="font-weight-bold text-right h4">$12,038</td>
-												</tr>
-											</tbody></table>
-										</div>
 									</div>
-									<div class="card-footer text-right">
-										<button type="button" class="btn btn-primary mb-1" onclick="javascript:window.print();"><i class="si si-wallet"></i> Pay Invoice</button>
-										<button type="button" class="btn btn-success mb-1" onclick="javascript:window.print();"><i class="si si-paper-plane"></i> Send Invoice</button>
-										<button type="button" class="btn btn-info mb-1" onclick="javascript:window.print();"><i class="si si-printer"></i> Print Invoice</button>
-									</div>
+
 								</div>
 							</div>
-						</div>	<!-- end row -->
+
+						</div>
+					</form>
 				</div>
 				<!--End side app-->
 

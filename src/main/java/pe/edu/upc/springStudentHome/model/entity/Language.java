@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "languages")
-@SequenceGenerator(name = "Languages_language_id_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "Languages_language_id_seq", initialValue = 10, allocationSize = 1)
 public class Language {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Languages_language_id_seq")
@@ -25,7 +25,10 @@ public class Language {
 	private String languageName;
 
 	@ManyToMany(mappedBy = "languages", fetch = FetchType.EAGER)
-	private Set<User> users;
+	private Set<Student> students;
+	
+	@ManyToMany(mappedBy = "languages", fetch = FetchType.EAGER)
+	private Set<Lessor> lessors;
 
 	// -- Constructor, Getter y Setter
 	public Language() {
@@ -48,12 +51,22 @@ public class Language {
 		this.languageName = languageName;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public Set<Student> getStudents() {
+		return students;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setStudents(Set<Student> students) {
+		this.students = students;
 	}
+
+	public Set<Lessor> getLessors() {
+		return lessors;
+	}
+
+	public void setLessors(Set<Lessor> lessors) {
+		this.lessors = lessors;
+	}
+
+	
 
 }

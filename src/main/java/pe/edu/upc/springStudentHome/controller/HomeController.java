@@ -9,30 +9,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pe.edu.upc.springStudentHome.model.entity.Apartment;
-import pe.edu.upc.springStudentHome.model.entity.User;
+import pe.edu.upc.springStudentHome.model.entity.Lessor;
+import pe.edu.upc.springStudentHome.model.entity.Student;
 import pe.edu.upc.springStudentHome.service.crud.ApartmentService;
-import pe.edu.upc.springStudentHome.service.crud.UserService;
+import pe.edu.upc.springStudentHome.service.crud.LessorService;
+import pe.edu.upc.springStudentHome.service.crud.StudentService;
 
 @Controller
 @RequestMapping("/home")	// GET y POST
 public class HomeController {
-	
-	@Autowired
-	private UserService userService;
-	
+			
 	@Autowired
 	private ApartmentService apartmentService;
+	
+	@Autowired
+	private StudentService studentService;
+	
+	@Autowired
+	private LessorService lessorService;
 
 	@GetMapping
 	public String home() {
 		return "home";
 	}	
 	
-	@GetMapping("/dashboard")		// GET: /apartments
+	@GetMapping("/dashboard")		
 	public String listar( Model model ) {
-		try {
-			List<User> users = userService.getAll();
-			model.addAttribute("users", users);
+		try {			
+			
+			List<Student> students = studentService.getAll();
+			model.addAttribute("students", students);	
+			
+			List<Lessor> lessors = lessorService.getAll();
+			model.addAttribute("lessors", lessors);	
 			
 			List<Apartment> apartments = apartmentService.getAll();
 			model.addAttribute("apartments", apartments);
