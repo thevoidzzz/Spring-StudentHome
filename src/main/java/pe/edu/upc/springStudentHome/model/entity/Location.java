@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Locations", indexes = { @Index(columnList = "city", name = "locations_index_city"),
 		@Index(columnList = "state_province", name = "location_index_state_province") })
-@SequenceGenerator(name = "Locations_location_id_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "Locations_location_id_seq", initialValue = 10, allocationSize = 1)
 public class Location {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Locations_location_id_seq")
@@ -43,23 +43,35 @@ public class Location {
 	private Country country; // Country_id
 
 	@OneToMany(mappedBy = "location")
-	private List<User> users;
+	private List<Student> students;
+
+	@OneToMany(mappedBy = "location")
+	private List<Lessor> lessors;
 
 	@OneToMany(mappedBy = "location")
 	private List<Apartment> apartments;
 
 	// -- Constructor, Getter y Setter
 	public Location() {
-		users = new ArrayList<User>();
+		students = new ArrayList<Student>();
+		lessors = new ArrayList<Lessor>();
 		apartments = new ArrayList<Apartment>();
 	}
 
-	public List<User> getUsers() {
-		return users;
+	public List<Student> getStudents() {
+		return students;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
+	public List<Lessor> getLessors() {
+		return lessors;
+	}
+
+	public void setLessors(List<Lessor> lessors) {
+		this.lessors = lessors;
 	}
 
 	public List<Apartment> getApartments() {

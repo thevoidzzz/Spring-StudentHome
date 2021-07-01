@@ -14,13 +14,13 @@ import pe.edu.upc.springStudentHome.service.crud.LocationService;
 
 @Controller
 @RequestMapping("/locations")
-@SessionAttributes("locationEdit")  // Se utiliza para guardar el objeto en memoria, cuando se envia y retorna.
+@SessionAttributes("locationEdit")  
 public class LocationController {
 
 	@Autowired
 	private LocationService locationService;
 	
-	@GetMapping		// GET: /apartments
+	@GetMapping		
 	public String listar( Model model ) {
 		try {
 			List<Location> locations = locationService.getAll();

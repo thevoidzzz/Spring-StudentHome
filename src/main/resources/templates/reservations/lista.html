@@ -37,211 +37,301 @@
 						</div>
 					</div>
 					<!-- page-header -->
-					<!-- page-header -->
 					<div class="page-header">
 						<ol class="breadcrumb">
 							<!-- breadcrumb -->
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Students</li>
-						</ol>
-						<div class="col-lg-12 col-xl-3">
-							<div class="card">
-								<div class="row card-body p-2">
-									<div class="col-sm-12 p-0">
-										<form th:action="@{/search/users}" th:object="${userSearch}"
-											method="get">
-											<div class="input-group">
-												<input type="search" class="form-control"
-													placeholder="Search ..." th:field="*{userName}"> <span
-													class="input-group-append">
-													<button class="btn btn-primary" type="submit">Search</button>
-												</span>
-											</div>
-										</form>
-									</div>
-								</div>
+							<li class="breadcrumb-item"><a th:href="@{home/dashboard}">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">My Reservations
+							</li>
+						</ol>											
+						<!-- End breadcrumb -->
+					</div>
+
+					<!-- page-header -->
+					<div class="page-header">
+						<div class="ml-auto">
+							<div class="input-group">
+								<a class="btn btn-primary text-white mr-2" id="daterange-btn">
+									<span> <i class="fa fa-calendar"></i> Event Settings
+								</span> <i class="fa fa-caret-down"></i>
+								</a> <a href="#" class="btn btn-secondary text-white"
+									data-toggle="tooltip" title="" data-placement="bottom"
+									data-original-title="Rating"> <span> <i
+										class="fa fa-star"></i>
+								</span>
+								</a>
 							</div>
 						</div>
-						<!-- End breadcrumb -->
 					</div>
 					<!-- End page-header -->
 
 					<!-- row -->
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="e-panel card">
-								<div class="card-header"></div>
-								<div class="card-body">
-									<div class="e-table">
-										<div class="table-responsive table-lg">
-											<table class="table table-bordered">
-												<thead>
-													<tr>
-														<th class="text-center"></th>
-														<th class="text-center">Photo</th>
-														<th>Name</th>
-														<th>Email</th>
-														<th class="text-center">Actions</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr th:each="reservation :${reservations}">
-														<td class="align-middle text-center">
-															<div
-																class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-																<input class="custom-control-input" id="item-1"
-																	type="checkbox"> <label
-																	class="custom-control-label" for="item-1"></label>
-															</div>
-														</td>
-														<td class="align-middle text-center"><img alt="image"
-															class="avatar avatar-md rounded-circle"
-															src="../assets/images/users/female/26.jpg"></td>
-														<td th:text="${reservation.apartment.apartmentName}"
-															class="text-nowrap align-middle"></td>
-														<td th:text="${user.userEmail}"
-															class="text-nowrap align-middle"><span></span></td>
-
-														<td class="text-center align-middle">
-															<div class="btn-group align-top">
-																<a th:href="@{'/users/' + ${user.id}}"><button
-																		class="btn btn-sm btn-primary badge"
-																		data-target="#user-form-modal" data-toggle="modal"
-																		type="button">View</button></a> <a
-																	th:href="@{'/users/' + ${user.id} + '/edit'}"><button
-																		class="btn btn-sm btn-primary badge"
-																		data-target="#user-form-modal" data-toggle="modal"
-																		type="button">Edit</button></a> <a
-																	th:href="@{'/users/' + ${user.id} + '/del'}"><button
-																		type="button" class="btn btn-sm btn-danger badge">
-																		<i class="fa fa-trash"></i>
-																	</button> </a>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
+					<div class="row row-cards">
+						<div class="col-lg-12 col-xl-9">
+							<div class="row">
+								<div class="col-lg-4 col-xl-4"
+									th:each="reservation : ${reservations}">
+									<div class="card item-card ">
+										<div class="ribbone">
+											<span class="ribbon1"> <span>50%</span>
+											</span>
 										</div>
-										<!--End side app-->
-										<div class="d-flex justify-content-center">
-											<ul class="pagination mt-3 mb-0">
-												<li class="disabled page-item"><a class="page-link"
-													href="#">‹</a></li>
-												<li class="active page-item"><a class="page-link"
-													href="#">1</a></li>
-												<li class="page-item"><a class="page-link" href="#">2</a>
-												</li>
-												<li class="page-item"><a class="page-link" href="#">3</a>
-												</li>
-												<li class="page-item"><a class="page-link" href="#">4</a>
-												</li>
-												<li class="page-item"><a class="page-link" href="#">5</a>
-												</li>
-												<li class="page-item"><a class="page-link" href="#">›</a>
-												</li>
-												<li class="page-item"><a class="page-link" href="#">»</a>
-												</li>
-											</ul>
+										<div class="card-body">
+											<div class="product">
+												<div class="text-center product-img">
+													<img th:src="@{/images/apartment.png}" alt="img"
+														class="img-fluid">
+												</div>
+												<div class="text-center mt-4">
+													<div class="text-center text-warning">
+														<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+															class="fa fa-star"></i> <i class="fa fa-star-half-o"></i>
+														<i class="fa fa-star-o"></i>
+													</div>
+													<a th:href="@{'/reservations/' + ${reservation.id}}"><h5
+															class="mb-0 mt-2" th:text="${reservation.apartment.apartmentName}"></h5></a>
+													<div class="price mt-3 h4 mb-0 ">
+														<s class="h4 text-muted mr-4"
+															th:text="${(reservation.apartment.apartmentPrice*2)}"></s> $<span
+															th:text="${reservation.apartment.apartmentPrice}"></span>
+														<div class="tags mt-3">
+															<span class="tag tag-pink" th:each="tag :${reservation.apartment.tags}"
+																th:text="${tag.tagName}"></span>
+
+														</div>
+
+													</div>
+												</div>
+												<div class="product-info">
+													<a href="#"
+														class="btn btn-icon btn-sm btn-warning mt-1 text-sm mb-1 text-white">
+														<i class="fe fe-shopping-cart"></i>
+													</a> <a href="#"
+														class="btn btn-icon btn-sm mt-1 mb-1 text-sm text-white btn-info notice">
+														<i class="fe fe-heart"></i>
+													</a> <a href="#"
+														class="btn btn-icon btn-sm btn-danger mt-1 text-sm mb-1 text-white btn-warning error">
+														<i class="fa fa-remove"></i>
+													</a>
+												</div>												
+											</div>
 										</div>
 									</div>
 								</div>
+								<div class="col-md-6 col-sm-12 mb-3 shop-count">
+
+									<p>1 - 10 of 234 photos</p>
+								</div>
+								<div class="col-md-6 mb-3 col-sm-12">
+									<div class="float-right shop-pagination">
+										<ul class="pagination">
+											<li class="page-item page-prev disabled"><a
+												class="page-link" href="#" tabindex="-1">Prev</a></li>
+											<li class="page-item active"><a class="page-link"
+												href="#">1</a></li>
+											<li class="page-item"><a class="page-link" href="#">2</a></li>
+											<li class="page-item"><a class="page-link" href="#">3</a></li>
+											<li class="page-item"><a class="page-link" href="#">4</a></li>
+											<li class="page-item"><a class="page-link" href="#">5</a></li>
+											<li class="page-item page-next"><a class="page-link"
+												href="#">Next</a></li>
+										</ul>
+									</div>
+								</div>
 							</div>
+							<!-- row end -->
 						</div>
+						<!-- row end -->
 
 
+						<div class="col-lg-12 col-xl-3">
+							
+							<div class="row">
+								<div class="col-md-12 col-lg-12">
 
-						<!-- Right-sidebar-->
-						<div th:replace="layout/layout :: sidebar"></div>
-						<!-- End Rightsidebar-->
+									<div class="card">
+										<div class="card-header">
+											<div class="card-title">Categories</div>
+										</div>
+										<div class="card-body">
+											<div class="form-group">
+												<label class="form-label">Mens</label> <select name="beast"
+													id="select-beast" class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Foot wear</option>
+													<option value="2">Top wear</option>
+													<option value="3">Bootom wear</option>
+													<option value="4">Men's Groming</option>
+													<option value="5">Accessories</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="form-label">Women</label> <select name="beast"
+													id="select-beast1" class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Western wear</option>
+													<option value="2">Foot wear</option>
+													<option value="3">Top wear</option>
+													<option value="4">Bootom wear</option>
+													<option value="5">Beuty Groming</option>
+													<option value="6">Accessories</option>
+													<option value="7">jewellery</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="form-label">Baby & Kids</label> <select
+													name="beast" id="select-beast2"
+													class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Boys clothing</option>
+													<option value="2">girls Clothing</option>
+													<option value="3">Toys</option>
+													<option value="4">Baby Care</option>
+													<option value="5">Kids footwear</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="form-label">Electronics</label> <select
+													name="beast" id="select-beast3"
+													class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Mobiles</option>
+													<option value="2">Laptops</option>
+													<option value="3">Gaming & Accessories</option>
+													<option value="4">Health care Appliances</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="form-label">Sport,Books & More </label> <select
+													name="beast" id="select-beast4"
+													class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Stationery</option>
+													<option value="2">Books</option>
+													<option value="3">Gaming</option>
+													<option value="4">Music</option>
+													<option value="5">Exercise & fitness</option>
+												</select>
+											</div>
+										</div>
+									</div>
 
-						<!--footer-->
-						<footer th:replace="layout/layout :: footer"></footer>
-						<!-- End Footer-->
-
+									<!-- Filter -->
+									<form class="shop__filter card">
+										<div class="card-header">
+											<h3 class="card-title">Price</h3>
+										</div>
+										<div class="card-body">
+											<label class="custom-control custom-radio"> <input
+												type="radio" class="custom-control-input"
+												name="example-radios" value="option1" checked=""> <span
+												class="custom-control-label">Under $25</span>
+											</label> <label class="custom-control custom-radio"> <input
+												type="radio" class="custom-control-input"
+												name="example-radios" value="option2"> <span
+												class="custom-control-label">$25 to $50</span>
+											</label> <label class="custom-control custom-radio"> <input
+												type="radio" class="custom-control-input"
+												name="example-radios" value="option2"> <span
+												class="custom-control-label">$50 to $100</span>
+											</label> <label class="custom-control custom-radio"> <input
+												type="radio" class="custom-control-input"
+												name="example-radios" value="option2"> <span
+												class="custom-control-label">Other (specify)</span>
+											</label>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- row end -->
+						</div>
+						<!-- col end -->
 					</div>
+					<!-- row end -->
+
 				</div>
+				<!--End side app-->
+
+				<!-- Right-sidebar-->
+				<div th:replace="layout/layout :: sidebar"></div>
+				<!-- End Rightsidebar-->
+
+				<!--footer-->
+				<footer th:replace="layout/layout :: footer"></footer>
+				<!-- End Footer-->
+
 			</div>
+			<!-- End app-content-->
+		</div>
+	</div>
+	<!-- End Page -->
 
-			<!-- End Page -->
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
 
-			<!-- Back to top -->
-			<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+	<!-- Jquery js-->
+	<script th:src="@{/assets/js/vendors/jquery-3.2.1.min.js}"></script>
 
-			<!-- Jquery js-->
-			<script th:src="@{/assets/js/vendors/jquery-3.2.1.min.js}"></script>
+	<!--Bootstrap.min js-->
+	<script th:src="@{/assets/plugins/bootstrap/popper.min.js}"></script>
+	<script th:src="@{/assets/plugins/bootstrap/js/bootstrap.min.js}"></script>
 
-			<!--Bootstrap.min js-->
-			<script th:src="@{/assets/plugins/bootstrap/popper.min.js}"></script>
-			<script th:src="@{/assets/plugins/bootstrap/js/bootstrap.min.js}"></script>
+	<!--Jquery Sparkline js-->
+	<script th:src="@{/assets/js/vendors/jquery.sparkline.min.js}"></script>
 
-			<!--Jquery Sparkline js-->
-			<script th:src="@{/assets/js/vendors/jquery.sparkline.min.js}"></script>
+	<!-- Chart Circle js-->
+	<script th:src="@{/assets/js/vendors/circle-progress.min.js}"></script>
 
-			<!-- Chart Circle js-->
-			<script th:src="@{/assets/js/vendors/circle-progress.min.js}"></script>
+	<!-- Star Rating js-->
+	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
 
-			<!-- Star Rating js-->
-			<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
+	<!--Moment js-->
+	<script th:src="@{/assets/plugins/moment/moment.min.js}"></script>
 
-			<!--Moment js-->
-			<script th:src="@{/assets/plugins/moment/moment.min.js}"></script>
+	<!-- Daterangepicker js-->
+	<script
+		th:src="@{/assets/plugins/bootstrap-daterangepicker/daterangepicker.js}"></script>
 
-			<!-- Daterangepicker js-->
-			<script
-				th:src="@{/assets/plugins/bootstrap-daterangepicker/daterangepicker.js}"></script>
+	<!--Side-menu js-->
+	<script th:src="@{/assets/plugins/toggle-sidebar/sidemenu.js}"></script>
 
-			<!--Side-menu js-->
-			<script th:src="@{/assets/plugins/toggle-sidebar/sidemenu.js}"></script>
+	<!-- Sidebar Accordions js -->
+	<script th:src="@{/assets/plugins/accordion1/js/easyResponsiveTabs.js}"></script>
 
-			<!-- Sidebar Accordions js -->
-			<script
-				th:src="@{/assets/plugins/accordion1/js/easyResponsiveTabs.js}"></script>
+	<!-- Custom scroll bar js-->
+	<script
+		th:src="@{/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js}"></script>
 
-			<!-- Custom scroll bar js-->
-			<script
-				th:src="@{/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js}"></script>
+	<!--Owl Carousel js -->
+	<script th:src="@{/assets/plugins/owl-carousel/owl.carousel.js}"></script>
+	<script th:src="@{/assets/plugins/owl-carousel/owl-main.js}"></script>
 
-			<!--Owl Carousel js -->
-			<script th:src="@{/assets/plugins/owl-carousel/owl.carousel.js}"></script>
-			<script th:src="@{/assets/plugins/owl-carousel/owl-main.js}"></script>
+	<!-- Rightsidebar js -->
+	<script th:src="@{/assets/plugins/sidebar/sidebar.js}"></script>
 
-			<!-- Rightsidebar js -->
-			<script th:src="@{/assets/plugins/sidebar/sidebar.js}"></script>
+	<!-- Charts js-->
+	<script th:src="@{/assets/plugins/chart/chart.bundle.js}"></script>
+	<script th:src="@{/assets/plugins/chart/utils.js}"></script>
 
-			<!-- Charts js-->
-			<script th:src="@{/assets/plugins/chart/chart.bundle.js}"></script>
-			<script th:src="@{/assets/plugins/chart/utils.js}"></script>
+	<!--Time Counter js-->
+	<script
+		th:src="@{/assets/plugins/counters/jquery.missofis-countdown.js}"></script>
+	<script th:src="@{/assets/plugins/counters/counter.js}"></script>
 
-			<!-- File uploads js -->
-			<script th:src="@{/assets/plugins/fileuploads/js/dropify.js}"></script>
-			<script th:src="@{/assets/plugins/fileuploads/js/dropify-demo.js}"></script>
+	<!--Morris  Charts js-->
+	<script th:src="@{/assets/plugins/morris/raphael-min.js}"></script>
+	<script th:src="@{/assets/plugins/morris/morris.js}"></script>
 
-			<!--Select2 js -->
-			<script th:src="@{/assets/plugins/select2/select2.full.min.js}"></script>
-			<script th:src="@{/assets/js/select2.js}"></script>
+	<!-- Custom-charts js-->
+	<script th:src="@{/assets/js/index1.js}"></script>
 
-			<!--Time Counter js-->
-			<script
-				th:src="@{/assets/plugins/counters/jquery.missofis-countdown.js}"></script>
-			<script th:src="@{/assets/plugins/counters/counter.js}"></script>
+	<!-- Notifications js -->
+	<script th:src="@{/assets/plugins/notify/js/rainbow.js}"></script>
+	<script th:src="@{/assets/plugins/notify/js/sample.js}"></script>
+	<script th:src="@{/assets/plugins/notify/js/jquery.growl.js}"></script>
+	<script th:src="@{/assets/plugins/notify/js/notifIt.js}"></script>
 
-			<!--Morris  Charts js-->
-			<script th:src="@{/assets/plugins/morris/raphael-min.js}"></script>
-			<script th:src="@{/assets/plugins/morris/morris.js}"></script>
-
-			<!-- Custom-charts js-->
-			<script th:src="@{/assets/js/index1.js}"></script>
-
-			<!-- Timepicker js -->
-			<script th:src="@{/assets/plugins/time-picker/jquery.timepicker.js}"></script>
-			<script th:src="@{/assets/plugins/time-picker/toggles.min.js}"></script>
-
-			<!-- Datepicker js -->
-			<script th:src="@{/assets/plugins/date-picker/spectrum.js}"></script>
-			<script th:src="@{/assets/plugins/date-picker/jquery-ui.js}"></script>
-			<script th:src="@{/assets/plugins/input-mask/jquery.maskedinput.js}"></script>
-
-			<!-- Custom js-->
-			<script th:src="@{/assets/js/custom.js}"></script>
+	<!-- Custom js-->
+	<script th:src="@{/assets/js/custom.js}"></script>
 </body>
 </html>

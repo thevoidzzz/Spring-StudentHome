@@ -3,33 +3,32 @@ package pe.edu.upc.springStudentHome.model.entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
-
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "Apartments", indexes = {
-		@Index(columnList = "apartment_name", name = "apartments_index_apartment_name") }, uniqueConstraints = {
-				@UniqueConstraint(columnNames = { "apartment_description" }) })
-@SequenceGenerator(name = "sequenceApartment", sequenceName = "Apartments_apartment_id_seq", initialValue = 1, allocationSize = 1)
+		@Index(columnList = "apartment_name", name = "apartments_index_apartment_name") })
+@SequenceGenerator(name = "sequenceApartment", sequenceName = "Apartments_apartment_id_seq", initialValue = 10 , allocationSize = 1)
 
 public class Apartment {
 	@Id
@@ -45,10 +44,13 @@ public class Apartment {
 
 	@Column(name = "apartment_price", columnDefinition = "DECIMAL(8,2)", nullable = false)
 	private Float apartmentPrice;
-	
-	@Column(name = "apartment_feature", length = 150, nullable = false)
-	private String apartmentFeature;
-	
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "apartments_tags", joinColumns = {
+			@JoinColumn(referencedColumnName = "apartment_id", name = "apartment_id") }, inverseJoinColumns = {
+					@JoinColumn(referencedColumnName = "tag_id", name = "tag_id") })
+	private Set<Tag> tags;
+
 	@Column(name = "favorite")
 	private Boolean favorite;
 
@@ -61,9 +63,13 @@ public class Apartment {
 	@JoinColumn(name = "location_id", nullable = false)
 	private Location location;
 
-	@ManyToOne()
-	@JoinColumn(name = "user_id")
-	private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "student_id")
+	private Student student;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "lessor_id")
+	private Lessor lessor;
 
 	@OneToMany(mappedBy = "apartment")
 	private List<Comment> comments;
@@ -77,30 +83,37 @@ public class Apartment {
 		reservations = new ArrayList<Reservation>();
 		comments = new ArrayList<Comment>();
 	}
-	
+
 	public Location getLocation() {
 		return location;
 	}
-		
 
-	public User getUser() {
-		return user;
+	public Student getStudent() {
+		return student;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	public String getApartmentFeature() {
-		return apartmentFeature;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
-	public void setApartmentFeature(String apartmentFeature) {
-		this.apartmentFeature = apartmentFeature;
+	public Lessor getLessor() {
+		return lessor;
+	}
+
+	public void setLessor(Lessor lessor) {
+		this.lessor = lessor;
 	}
 
 	public List<Comment> getComments() {
 		return comments;
+	}
+
+	public Set<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
 
 	public void setComments(List<Comment> comments) {

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>StudentHome</title>
+<!-- plugins:css -->
+<link rel="stylesheet"
+	th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+<link rel="stylesheet"
+	th:href="@{/vendors/iconfonts/ionicons/dist/css/ionicons.css}">
+<link rel="stylesheet"
+	th:href="@{/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css}">
+<link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+<link rel="stylesheet"
+	th:href="@{/vendors/css/vendor.bundle.addons.css}">
+<!-- endinject -->
+<!-- plugin css for this page -->
+<!-- End plugin css for this page -->
+<!-- inject:css -->
+<link rel="stylesheet" th:href="@{/css/register/style.css}">
+<!-- endinject -->
+<!-- Layout styles -->
+<!-- End Layout styles -->
+<link rel="shortcut icon" th:href="@{/favicon.ico}" />
+</head>
+<body>
+	<div class="container" id="container">
+		<div class="form-container sign-in-container">
+			<form>
+				<h1>Lessor Register</h1>
+				<div class="social-container">
+					<a class="social"><i class="fab fa-facebook-f"></i></a> <a
+						class="social"><i class="fab fa-google-plus-g"></i></a> <a
+						class="social"><i class="fab fa-linkedin-in"></i></a>
+				</div>
+				<span>o usa tu email para la verificación</span> <input name="first"
+					type="text" required
+					placeholder="Nombre" /> <input name="lastName" type="text"
+					required placeholder="Apellido" /> <input
+					name="email" type="text" required
+					placeholder="Email" /> <input name="password" type="password"
+					required placeholder="Contraseña" /> <a></a>
+				<button class="pointer">Registrarse</button>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-right">
+					<h1>Bienvenido de nuevo!</h1>
+					<p>Para estar conectado con nosotros, inicia sesión con tus
+						credenciales</p>
+					<button class="ghost" >Inicia
+						Sesión</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- container-scroller -->
+	<!-- plugins:js -->
+	<script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+	<script th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
+	<!-- endinject -->
+	<!-- inject:js -->
+	<script th:src="@{/js/shared/off-canvas.js}"></script>
+	<script th:src="@{/js/shared/misc.js}"></script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body class="app sidebar-mini rtl">
+
+	<!--Global-Loader-->
+	<div id="global-loader">
+		<img th:src="@{/assets/images/icons/loader.svg}" alt="loader">
+	</div>
+
+	<div class="page">
+		<div class="page-main">
+
+			<!--app-header-->
+			<div th:replace="layout/layout :: header"></div>
+			<!--app-header end-->
+
+			<!-- Sidebar menu-->
+			<div th:replace="layout/layout :: dashboard"></div>
+			<!--sidemenu end-->
+
+			<!-- app-content-->
+			<div class="app-content  my-3 my-md-5 toggle-content">
+				<div class="side-app">
+					<div class="bg-white p-3 header-secondary row">
+						<div class="col">
+							<div class="d-flex">
+								<a class="btn btn-danger" href="#"><i
+									class="fe fe-rotate-cw mr-1 mt-1"></i> Upgrade </a>
+							</div>
+
+						</div>
+
+					</div>
+					<!-- page-header -->
+					<div class="page-header">
+						<ol class="breadcrumb">
+							<!-- breadcrumb -->
+							<li class="breadcrumb-item"><a th:href="@{home/dashboard}">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Apartments
+							</li>
+						</ol>
+						<!-- End breadcrumb -->
+					</div>
+
+					<!-- page-header -->
+					<div class="page-header">
+						<ol class="breadcrumb">
+							<!-- breadcrumb -->
+							<li class="breadcrumb-item" th:text="${reservation.apartment.apartmentName}"><a
+								href="#"></a></li>
+							<li class="breadcrumb-item active" aria-current="page">Details</li>
+						</ol>
+						<!-- End breadcrumb -->
+						<div class="ml-auto">
+							<div class="input-group">
+								<a class="btn btn-primary text-white mr-2" id="daterange-btn">
+									<span> <i class="fa fa-calendar"></i> Event Settings
+								</span> <i class="fa fa-caret-down"></i>
+								</a> <a href="#" class="btn btn-secondary text-white"
+									data-toggle="tooltip" title="" data-placement="bottom"
+									data-original-title="Rating"> <span> <i
+										class="fa fa-star"></i>
+								</span>
+								</a>
+							</div>
+						</div>
+					</div>
+					<!-- End page-header -->
+
+
+					<!-- row -->
+					<div class="row row-cards">
+						<div class="col-lg-12 col-xl-9">
+							<div class="card">
+								<div class="card-body single-productslide">
+									<div class="product-gallery border">
+										<div class="product-item text-center">
+											<img th:src="@{/assets/images/products/apple-iphone7.jpg}"
+												alt="img">
+										</div>
+										<div class="product-sm-gallery">
+											<div class="item-gallery ">
+												<img
+													th:src="@{/assets/images/products/apple-iphone7-special.jpg}"
+													alt="img">
+											</div>
+											<div class="item-gallery">
+												<img th:src="@{/assets/images/products/samsung-galaxy.jpg}"
+													alt="img">
+											</div>
+											<div class="item-gallery">
+												<img th:src="@{/assets/images/products/xiaomi-mi.jpg}"
+													alt="img">
+											</div>
+										</div>
+									</div>
+									<div class="product-gallery-data mb-0">
+										<div class="contact-space">
+											<h3 class="mb-3 font-weight-semibold"
+												th:text="${reservation.apartment.apartmentName}"></h3>
+											<button type="button" class="btn btn-icon btn-primary"
+												data-toggle="modal" data-target="#exampleModal">
+												<i class="fa fa-whatsapp"></i>
+											</button>
+										</div>
+										<div class="mb-3">
+											<span class="font-weight-semibold h1 text-dark">$</span><span
+												class="font-weight-semibold h1 text-dark"
+												th:text="${reservation.apartment.apartmentPrice}"></span> <span
+												class="text-primary ml-2"><i
+												class="fa fa-info-circle"></i> 50% off</span>
+										</div>
+										<h6 class="font-weight-semibold mt-3">Description</h6>
+										<p class="text-muted"
+											th:text="${reservation.apartment.apartmentDescription}"></p>
+
+										<dl class="product-gallery-data1">
+											<dt>Lessor</dt>
+											<dd th:text="${reservation.user.userName}"></dd>
+										</dl>
+										
+										<dl class="product-gallery-data1">
+											<dt>Services</dt>
+											<span th:each="tag :${reservation.apartment.tags}"
+												th:text="${tag.tagName + ', '}"></span>
+										</dl>
+										<dl class="product-gallery-data1">
+											<dt>Location</dt>
+											<dd
+												th:text="${reservation.apartment.location.city + ', ' + reservation.apartment.location.country.countryName}"></dd>
+										</dl>
+										<dl class="product-gallery-data1">
+											<dt>Initial Date</dt>
+											<dd
+												th:text="${reservation.reservationInitialDate}"></dd>
+										</dl>
+										<dl class="product-gallery-data1">
+											<dt>Final Date</dt>
+											<dd
+												th:text="${reservation.reservationFinalDate}"></dd>
+										</dl>
+										<dl class="product-gallery-data1">
+											<dt>Rating</dt>
+											<div class="stars stars-example-fontawesome">
+												<select id="example-fontawesome" name="rating"
+													autocomplete="off">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+												</select>
+											</div>
+										</dl>
+										<div class="product-gallery-rats">
+											<ul class="product-gallery-rating">
+												<li><a href="#"><i class="fa fa-star text-warning"></i></a>
+													<a href="#"><i class="fa fa-star text-warning"></i></a> <a
+													href="#"><i class="fa fa-star text-warning"></i></a> <a
+													href="#"><i class="fa fa-star text-warning"></i></a> <a
+													href="#"><i class="fa fa-star-o text-warning"></i></a></li>
+											</ul>
+											<div class="label-rating ml-2">793 reviews</div>
+											<a
+												th:href="@{'/apartments/' + ${reservation.apartment.id} + '/comments'}"
+												class="btn btn-primary btn-sm"><i class="si si-eye mr-1"></i>View
+												Reviews</a>
+										</div>
+
+									</div>
+								</div>
+								<div class="card-footer text-right">
+									 <a th:href="@{'/reservations/' + ${reservation.id} + '/del'}"
+										class="btn  btn-danger"> Delete </a> <a
+										th:href="@{'/reservations/' + ${reservation.id} + '/edit'}"
+										class="btn  btn-success"> Edit </a>
+								</div>
+
+							</div>
+						</div>
+						<!-- 					finish -->
+
+						<div class="col-lg-12 col-xl-3">
+							<div class="card">
+								<div class="row card-body p-2">
+									<div class="col-sm-12 p-0">
+										<div class="input-group">
+											<input type="text" class="form-control"
+												placeholder="Buscar ..."> <span
+												class="input-group-append">
+												<button class="btn btn-primary" type="button">Search</button>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 col-lg-12">
+
+									<div class="card">
+										<div class="card-header">
+											<div class="card-title">Categories</div>
+										</div>
+										<div class="card-body">
+											<div class="form-group">
+												<label class="form-label">Mens</label> <select name="beast"
+													id="select-beast" class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Foot wear</option>
+													<option value="2">Top wear</option>
+													<option value="3">Bootom wear</option>
+													<option value="4">Men's Groming</option>
+													<option value="5">Accessories</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="form-label">Women</label> <select name="beast"
+													id="select-beast1" class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Western wear</option>
+													<option value="2">Foot wear</option>
+													<option value="3">Top wear</option>
+													<option value="4">Bootom wear</option>
+													<option value="5">Beuty Groming</option>
+													<option value="6">Accessories</option>
+													<option value="7">jewellery</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="form-label">Baby & Kids</label> <select
+													name="beast" id="select-beast2"
+													class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Boys clothing</option>
+													<option value="2">girls Clothing</option>
+													<option value="3">Toys</option>
+													<option value="4">Baby Care</option>
+													<option value="5">Kids footwear</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="form-label">Electronics</label> <select
+													name="beast" id="select-beast3"
+													class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Mobiles</option>
+													<option value="2">Laptops</option>
+													<option value="3">Gaming & Accessories</option>
+													<option value="4">Health care Appliances</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="form-label">Sport,Books & More </label> <select
+													name="beast" id="select-beast4"
+													class="form-control custom-select">
+													<option value="0">--Select--</option>
+													<option value="1">Stationery</option>
+													<option value="2">Books</option>
+													<option value="3">Gaming</option>
+													<option value="4">Music</option>
+													<option value="5">Exercise & fitness</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- Filter -->
+									<form class="shop__filter card">
+										<div class="card-header">
+											<h3 class="card-title">Price</h3>
+										</div>
+										<div class="card-body">
+											<label class="custom-control custom-radio"> <input
+												type="radio" class="custom-control-input"
+												name="example-radios" value="option1" checked=""> <span
+												class="custom-control-label">Under $25</span>
+											</label> <label class="custom-control custom-radio"> <input
+												type="radio" class="custom-control-input"
+												name="example-radios" value="option2"> <span
+												class="custom-control-label">$25 to $50</span>
+											</label> <label class="custom-control custom-radio"> <input
+												type="radio" class="custom-control-input"
+												name="example-radios" value="option2"> <span
+												class="custom-control-label">$50 to $100</span>
+											</label> <label class="custom-control custom-radio"> <input
+												type="radio" class="custom-control-input"
+												name="example-radios" value="option2"> <span
+												class="custom-control-label">Other (specific)</span>
+											</label>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- row end -->
+						</div>
+						<!-- col end -->
+					</div>
+					<!-- row end -->
+				</div>
+				<!--End side app-->
+
+				<div class="modal fade" id="exampleModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Lessor
+									Contact Details</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p>
+									<strong>Lessor: </strong> <span
+										th:text="${reservation.apartment.user.userName}"></span>
+								</p>
+								<p>
+									<strong>Email: </strong> <span
+										th:text="${reservation.apartment.user.userEmail}"></span>
+								</p>
+								<p>
+									<strong>Contact Phone: </strong> <span
+										th:text="${reservation.apartment.user.userPhone}"></span>
+								</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-success"
+									data-dismiss="modal">Accept</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Right-sidebar-->
+				<div th:replace="layout/layout :: sidebar"></div>
+				<!-- End Rightsidebar-->
+
+				<!--footer-->
+				<footer th:replace="layout/layout :: footer"></footer>
+				<!-- End Footer-->
+
+			</div>
+			<!-- End app-content-->
+		</div>
+	</div>
+	<!-- End Page -->
+
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<!-- Jquery js-->
+	<script th:src="@{/assets/js/vendors/jquery-3.2.1.min.js}"></script>
+
+	<!--Bootstrap.min js-->
+	<script th:src="@{/assets/plugins/bootstrap/popper.min.js}"></script>
+	<script th:src="@{/assets/plugins/bootstrap/js/bootstrap.min.js}"></script>
+
+	<!--Jquery Sparkline js-->
+	<script th:src="@{/assets/js/vendors/jquery.sparkline.min.js}"></script>
+
+	<!-- Chart Circle js-->
+	<script th:src="@{/assets/js/vendors/circle-progress.min.js}"></script>
+
+	<!-- Star Rating js-->
+	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
+
+	<!--Moment js-->
+	<script th:src="@{/assets/plugins/moment/moment.min.js}"></script>
+
+	<!-- Daterangepicker js-->
+	<script
+		th:src="@{/assets/plugins/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+	<!--Side-menu js-->
+	<script th:src="@{/assets/plugins/toggle-sidebar/sidemenu.js}"></script>
+
+	<!-- Sidebar Accordions js -->
+	<script th:src="@{/assets/plugins/accordion1/js/easyResponsiveTabs.js}"></script>
+
+	<!-- Custom scroll bar js-->
+	<script
+		th:src="@{/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+	<!--Owl Carousel js -->
+	<script th:src="@{/assets/plugins/owl-carousel/owl.carousel.js}"></script>
+	<script th:src="@{/assets/plugins/owl-carousel/owl-main.js}"></script>
+
+	<!-- Rightsidebar js -->
+	<script th:src="@{/assets/plugins/sidebar/sidebar.js}"></script>
+
+	<!-- Charts js-->
+	<script th:src="@{/assets/plugins/chart/chart.bundle.js}"></script>
+	<script th:src="@{/assets/plugins/chart/utils.js}"></script>
+
+	<!--Time Counter js-->
+	<script
+		th:src="@{/assets/plugins/counters/jquery.missofis-countdown.js}"></script>
+	<script th:src="@{/assets/plugins/counters/counter.js}"></script>
+
+	<!--Morris  Charts js-->
+	<script th:src="@{/assets/plugins/morris/raphael-min.js}"></script>
+	<script th:src="@{/assets/plugins/morris/morris.js}"></script>
+
+	<!-- Custom-charts js-->
+	<script th:src="@{/assets/js/index1.js}"></script>
+
+	<!-- Custom js-->
+	<script th:src="@{/assets/js/custom.js}"></script>
+
+	<!--Rating js-->
+	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
+	<script th:src="@{/assets/plugins/rating/jquery.barrating.js}"></script>
+	<script th:src="@{/assets/plugins/rating/js/examples.js}"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body class="app sidebar-mini rtl">
+
+	<!--Global-Loader-->
+	<div id="global-loader">
+		<img th:src="@{/assets/images/icons/loader.svg}" alt="loader">
+	</div>
+
+	<div class="page">
+		<div class="page-main">
+
+			<!--app-header-->
+			<div th:replace="layout/layout :: header"></div>
+			<!--app-header end-->
+
+			<!-- Sidebar menu-->
+			<div th:replace="layout/layout :: dashboard"></div>
+			<!--sidemenu end-->
+
+			<!-- app-content-->
+			<div class="app-content  my-3 my-md-5 toggle-content">
+				<div class="side-app">
+					<div class="bg-white p-3 header-secondary row">
+						<div class="col">
+							<div class="d-flex">
+								<a class="btn btn-danger" href="#"><i
+									class="fe fe-rotate-cw mr-1 mt-1"></i> Upgrade </a>
+							</div>
+
+						</div>
+					</div>
+					<!-- page-header -->
+					<div class="page-header">
+						<ol class="breadcrumb">
+							<!-- breadcrumb -->
+							<li class="breadcrumb-item"><a th:href="@{home/dashboard}">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Subscriptions</li>
+						</ol>						
+						<!-- End breadcrumb -->
+					</div>
+					<!-- End page-header -->
+
+
+					<!-- row -->
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-lg-6 col-xl-3 mt-2"
+							th:each="payment : ${payments}">
+							<div class="panel price  panel-color">
+								<div class=" bg-white text-center">
+									<svg x="0" y="0" viewBox="0 0 360 220">
+											<g>
+												<path fill="#1753fc"
+											d="M0.732,193.75c0,0,29.706,28.572,43.736-4.512c12.976-30.599,37.005-27.589,44.983-7.061
+													c8.09,20.815,22.83,41.034,48.324,27.781c21.875-11.372,46.499,4.066,49.155,5.591c6.242,3.586,28.729,7.626,38.246-14.243
+													s27.202-37.185,46.917-8.488c19.715,28.693,38.687,13.116,46.502,4.832c7.817-8.282,27.386-15.906,41.405,6.294V0H0.48
+													L0.732,193.75z"></path>
+											</g>
+											<text transform="matrix(1 0 0 1 45 116.2686)" fill="#fff"
+											font-size="35" th:text="${payment.subscription.subscriptionName}"></text>
+										</svg>
+								</div>
+								<div class="panel-body text-center">
+									<p class="lead">
+										<strong>$</strong><strong
+											th:text="${payment.subscription.subscriptionPrice}"></strong> <strong>/</strong>
+										month
+									</p>
+								</div>
+								<ul class="list-group list-group-flush text-center">
+									<li class="list-group-item"><strong
+										th:text="${payment.subscription.subscriptionAdvantage1}"> </strong></li>
+									<li class="list-group-item"><strong
+										th:text="${payment.subscription.subscriptionAdvantage2}"> </strong></li>
+									<li class="list-group-item"><strong
+										th:text="${payment.subscription.subscriptionAdvantage3}"> </strong></li>
+								</ul>
+								<div class="panel-footer text-center">
+									<a class="btn btn-lg btn-danger btn-block" th:href="@{'/payments/' + ${payment.id} + '/del'}">Cancel Subscription</a>										
+								</div>
+							</div>
+						</div>
+						<!-- col-end -->
+
+						<!-- col-end -->
+					</div>
+					<!-- row end -->
+				</div>
+
+				<!-- Right-sidebar-->
+				<div th:replace="layout/layout :: sidebar"></div>
+				<!-- End Rightsidebar-->
+
+				<!--footer-->
+				<footer th:replace="layout/layout :: footer"></footer>
+				<!-- End Footer-->
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- End Page -->
+
+	<!-- Back to top -->
+	<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+	<!-- Jquery js-->
+	<script th:src="@{/assets/js/vendors/jquery-3.2.1.min.js}"></script>
+
+	<!--Bootstrap.min js-->
+	<script th:src="@{/assets/plugins/bootstrap/popper.min.js}"></script>
+	<script th:src="@{/assets/plugins/bootstrap/js/bootstrap.min.js}"></script>
+
+	<!--Jquery Sparkline js-->
+	<script th:src="@{/assets/js/vendors/jquery.sparkline.min.js}"></script>
+
+	<!-- Chart Circle js-->
+	<script th:src="@{/assets/js/vendors/circle-progress.min.js}"></script>
+
+	<!-- Star Rating js-->
+	<script th:src="@{/assets/plugins/rating/jquery.rating-stars.js}"></script>
+
+	<!--Moment js-->
+	<script th:src="@{/assets/plugins/moment/moment.min.js}"></script>
+
+	<!-- Daterangepicker js-->
+	<script
+		th:src="@{/assets/plugins/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+	<!--Side-menu js-->
+	<script th:src="@{/assets/plugins/toggle-sidebar/sidemenu.js}"></script>
+
+	<!-- Sidebar Accordions js -->
+	<script th:src="@{/assets/plugins/accordion1/js/easyResponsiveTabs.js}"></script>
+
+	<!-- Custom scroll bar js-->
+	<script
+		th:src="@{/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js}"></script>
+
+	<!--Owl Carousel js -->
+	<script th:src="@{/assets/plugins/owl-carousel/owl.carousel.js}"></script>
+	<script th:src="@{/assets/plugins/owl-carousel/owl-main.js}"></script>
+
+	<!-- Rightsidebar js -->
+	<script th:src="@{/assets/plugins/sidebar/sidebar.js}"></script>
+
+	<!-- Charts js-->
+	<script th:src="@{/assets/plugins/chart/chart.bundle.js}"></script>
+	<script th:src="@{/assets/plugins/chart/utils.js}"></script>
+
+	<!-- File uploads js -->
+	<script th:src="@{/assets/plugins/fileuploads/js/dropify.js}"></script>
+	<script th:src="@{/assets/plugins/fileuploads/js/dropify-demo.js}"></script>
+
+	<!--Select2 js -->
+	<script th:src="@{/assets/plugins/select2/select2.full.min.js}"></script>
+	<script th:src="@{/assets/js/select2.js}"></script>
+
+	<!--Time Counter js-->
+	<script
+		th:src="@{/assets/plugins/counters/jquery.missofis-countdown.js}"></script>
+	<script th:src="@{/assets/plugins/counters/counter.js}"></script>
+
+	<!--Morris  Charts js-->
+	<script th:src="@{/assets/plugins/morris/raphael-min.js}"></script>
+	<script th:src="@{/assets/plugins/morris/morris.js}"></script>
+
+	<!-- Custom-charts js-->
+	<script th:src="@{/assets/js/index1.js}"></script>
+
+	<!-- Timepicker js -->
+	<script th:src="@{/assets/plugins/time-picker/jquery.timepicker.js}"></script>
+	<script th:src="@{/assets/plugins/time-picker/toggles.min.js}"></script>
+
+	<!-- Datepicker js -->
+	<script th:src="@{/assets/plugins/date-picker/spectrum.js}"></script>
+	<script th:src="@{/assets/plugins/date-picker/jquery-ui.js}"></script>
+	<script th:src="@{/assets/plugins/input-mask/jquery.maskedinput.js}"></script>
+
+	<!-- Custom js-->
+	<script th:src="@{/assets/js/custom.js}"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +45,7 @@
 							</li>
 						</ol>
 						<div class="col col-auto">
-							<a th:href="@{'/apartments/new'}"
+							<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_LESSOR')" th:href="@{'/apartments/new'}"
 								class="btn btn-success mt-4 mt-sm-0"><i
 								class="fe fe-plus mr-1 mt-1"></i> New Apartment </a>
 						</div>
@@ -84,7 +84,7 @@
 										<div class="card-body">
 											<div class="product">
 												<div class="text-center product-img">
-													<img th:src="@{/assets/images/products/1.png}" alt="img"
+													<img th:src="@{/images/apartment.png}" alt="img"
 														class="img-fluid">
 												</div>
 												<div class="text-center mt-4">
@@ -100,22 +100,25 @@
 															th:text="${(apartment.apartmentPrice*2)}"></s> $<span
 															th:text="${apartment.apartmentPrice}"></span>
 														<div class="tags mt-3">
-															<span class="tag tag-pink" th:text="${(apartment.apartmentFeature)}"></span> 
+															<span class="tag tag-pink" th:each="tag :${apartment.tags}"
+																th:text="${tag.tagName}"></span>
+
 														</div>
+
 													</div>
 												</div>
 												<div class="product-info">
 													<a href="#"
-														class="btn btn-icon btn-sm btn-warning mt-1 text-sm  mb-1 text-white">
+														class="btn btn-icon btn-sm btn-warning mt-1 text-sm mb-1 text-white">
 														<i class="fe fe-shopping-cart"></i>
 													</a> <a href="#"
-														class="btn  btn-info btn-sm mt-1 mb-1 text-sm text-white btn btn-info notice">
+														class="btn btn-icon btn-sm mt-1 mb-1 text-sm text-white btn-info notice">
 														<i class="fe fe-heart"></i>
 													</a> <a href="#"
-														class="btn btn-icon btn-sm btn-danger mt-1 text-sm  mb-1 text-white btn btn-warning error">
+														class="btn btn-icon btn-sm btn-danger mt-1 text-sm mb-1 text-white btn-warning error">
 														<i class="fa fa-remove"></i>
 													</a>
-												</div>
+												</div>												
 											</div>
 										</div>
 									</div>

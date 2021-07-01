@@ -60,11 +60,11 @@
 									<div class="text-center">
 										<div class="userprofile ">
 											<div class="userpic  brround">
-												<img src="../assets/images/users/female/5.jpg" alt=""
+												<img th:src="@{/images/michulon.jpg}" alt=""
 													class="userpicimg">
 											</div>
-											<h3 class="username mb-2">Anthony Tangana</h3>
-											<p class="mb-1">Student, Lima</p>
+											<h3 class="username mb-2" th:text="${studentEdit.studentName}"></h3>
+											<p class="mb-1">STUDENT</p>
 											<div class="text-center mb-4">
 												<span><i class="fa fa-star text-warning"></i></span> <span><i
 													class="fa fa-star text-warning"></i></span> <span><i
@@ -112,11 +112,11 @@
 								<div class="card-body pt-3 pb-3">
 									<div class="memberblock mb-0">
 										<div class="row">
-											<div th:each="user :${users}"
+											<div th:each="student :${students}"
 												class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pl-1 pr-1 m-t-5 m-b-5">
 												<a href="" class="member"> <img
 													th:src="@{/assets/images/icons/2.svg}" alt="">
-													<div class="memmbername" th:text="${user.userName}"></div>
+													<div class="memmbername" th:text="${student.studentName}"></div>
 												</a>
 											</div>
 										</div>
@@ -149,7 +149,7 @@
 						</div>
 
 						<div class="col-lg-12 col-xl-8 col-md-12 col-sm-12">
-							<form th:action="@{/users/save}" th:object="${userEdit}"
+							<form th:action="@{/users/students/save}" th:object="${studentEdit}"
 								method="post">
 								<div class="card">
 									<div class="card-header">
@@ -157,27 +157,27 @@
 									</div>
 									<div class="card-body">
 										<div class="form-group">
-											<label for="userName">Full Name</label> <input type="text"
-												class="form-control" th:field="*{userName}"
+											<label for="studentName">Full Name</label> <input type="text"
+												class="form-control" th:field="*{studentName}"
 												placeholder="Anthony Tangana">
 										</div>
 										<div class="form-group">
-											<label for="userEmail">Email</label> <input type="email"
-												class="form-control" th:field="*{userEmail}"
+											<label for="studentEmail">Email</label> <input type="email"
+												class="form-control" th:field="*{studentEmail}"
 												placeholder="anthony@gmail.com">
 										</div>
 										<div class="form-group">
-											<label for="userPhone">Phone Number</label> <input
-												type="number" class="form-control" th:field="*{userPhone}"
+											<label for="studentPhone">Phone Number</label> <input
+												type="number" class="form-control" th:field="*{studentPhone}"
 												placeholder="984567123">
 										</div>
 										<div class="form-group">
-											<label class="form-label" for="userBiography">Biography</label>
+											<label class="form-label" for="studentBiography">Biography</label>
 											<textarea class="form-control" rows="6"
-												th:field="*{userBiography}">My bio.........</textarea>
+												th:field="*{studentBiography}">My bio.........</textarea>
 										</div>
 										<div class="wd-200 mg-b-30">
-											<label for="initialDatePublication" class="form-label">Date
+											<label for="studentBirthday" class="form-label">Date
 												Of Birth </label>
 											<div class="input-group">
 
@@ -188,14 +188,14 @@
 												</div>
 												<input class="form-control fc-datepicker"
 													placeholder="MM/DD/YYYY" type="text"
-													th:field="*{userBirthday}">
+													th:field="*{studentBirthday}">
 											</div>
 										</div>
 										<div class="form-group mb-0 mt-5">
 											<div class="row">
 												<div class="col-xl-6 col-lg-12 col-md-12 userprofile">
 													<div class="userpic mb-2">
-														<img src="../assets/images/users/female/5.jpg" alt=""
+														<img th:src="@{/images/michulon.jpg}" alt=""
 															class="userpicimg">
 													</div>
 													<p class="text-center">Student, UPC</p>
@@ -209,7 +209,7 @@
 												<div class="col-xl-6 col-lg-12 col-md-12">
 													<div class="form-group">
 														<label for="userPassword">Change Password</label> <input
-															type="password" th:field="*{userPassword}"
+															type="password" 
 															class="form-control" placeholder="********">
 													</div>
 													<div class="form-group">
@@ -226,11 +226,8 @@
 									</div>
 									<div class="card-footer text-right">
 										<button class="btn btn-success" type="submit"
-											th:href="@{'/users'}">Save</button>
-										<a th:href="@{/users}" class="btn  btn-danger"> Cancel </a>
-										<button type="button" class="btn  btn-danger"
-											data-toggle="modal" data-target="#exampleModal">Delete
-											Account</button>
+											th:href="@{/users/students}">Save</button>
+										<a th:href="@{/users/students}" class="btn  btn-danger"> Cancel </a>										
 									</div>
 								</div>
 							</form>
@@ -260,7 +257,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary"
 									data-dismiss="modal">Cancel</button>
-								<a th:href="@{'/users/' + ${user.id} + '/del'}"><button
+								<a th:href="@{'users/students/' + ${student.id} + '/del'}"><button
 										type="button" class="btn btn-danger">
 										Delete
 									</button> </a>								
@@ -332,22 +329,27 @@
 	<script th:src="@{/assets/plugins/chart/chart.bundle.js}"></script>
 	<script th:src="@{/assets/plugins/chart/utils.js}"></script>
 
+
 	<!-- File uploads js -->
 	<script th:src="@{/assets/plugins/fileuploads/js/dropify.js}"></script>
 	<script th:src="@{/assets/plugins/fileuploads/js/dropify-demo.js}"></script>
 
+
 	<!--Select2 js -->
 	<script th:src="@{/assets/plugins/select2/select2.full.min.js}"></script>
 	<script th:src="@{/assets/js/select2.js}"></script>
+
 
 	<!--Time Counter js-->
 	<script
 		th:src="@{/assets/plugins/counters/jquery.missofis-countdown.js}"></script>
 	<script th:src="@{/assets/plugins/counters/counter.js}"></script>
 
+
 	<!--Morris  Charts js-->
 	<script th:src="@{/assets/plugins/morris/raphael-min.js}"></script>
 	<script th:src="@{/assets/plugins/morris/morris.js}"></script>
+
 
 	<!-- Custom-charts js-->
 	<script th:src="@{/assets/js/index1.js}"></script>

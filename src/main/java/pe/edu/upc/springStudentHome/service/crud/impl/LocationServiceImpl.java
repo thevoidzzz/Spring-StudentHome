@@ -33,4 +33,5 @@ public class LocationServiceImpl implements LocationService {
 	public List<Location> findByStateProvince(String stateProvince) throws Exception {
 		return locationRepository.findByStateProvince(stateProvince);
 	}
+	
 }
